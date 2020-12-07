@@ -1,0 +1,11 @@
+@import "~@angular/material/_theming";
+
+@include mat-core();
+
+//CUSTOM TYPOGRAPHY
+$app-typography: mat-typography-config(
+    $font-family: '"Open Sans", "Helvetica Neue", sans-serif'
+);
+
+@include angular-material-typography($app-typography);
+

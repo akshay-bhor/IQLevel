@@ -1,0 +1,65 @@
+
+    <mat-card>
+         <!-- Spinner -->
+         <div *ngIf="loading">
+            <mat-spinner  style="margin:0 auto;" class="mat-display-4"></mat-spinner>
+        </div>
+        <div *ngIf="!loading">
+            <h2>Register</h2>
+            <form [formGroup]="form" (ngSubmit)="register()">
+                <mat-error *ngIf="invalidRegister" id="err" class="alert alert-danger">{{ formError }}</mat-error>
+                
+                <mat-form-field class="block tmar">
+
+                    <mat-label>Username</mat-label>
+                    <input matInput
+                    formControlName="uname"
+                    type="text" name="uname" id="user" />
+                    <mat-error class="alert alert-danger" *ngIf="uname.touched && !uname.valid">
+                        <div *ngIf="uname.errors.required">Username is required!</div>
+                        <div *ngIf="uname.errors.minlength">Minlength is 3</div>
+                        <div *ngIf="uname.errors.noSpace">Username Cannot Contain Space</div>
+                        <div *ngIf="uname.errors.alfanum">Only Alphanumeric Characters Allowed</div>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="block tmar">
+                    <mat-label>Email</mat-label>
+                    <input matInput
+                    formControlName="email"
+                    type="text" name="email" id="email" />
+                    <mat-error class="alert alert-danger" *ngIf="email.touched && !email.valid">
+                        <div *ngIf="email.errors.email">Invalid Email!</div>
+                        <div *ngIf="email.errors.required">Email is Required!</div>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="block tmar">
+                    <mat-label>Age</mat-label>
+                    <input matInput
+                    formControlName="age"
+                    type="number" name="age" id="age" />
+                    <mat-error class="alert alert-danger" *ngIf="age.touched && !age.valid">
+                        <div *ngIf="age.errors.required">Age is Required!</div>
+                        <div *ngIf="age.errors.ageGroup">Min & Max Age is 3 && 99 Resp.</div>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="block tmar">
+                    <mat-label>Password</mat-label>
+                    <input matInput
+                    formControlName="pass"
+                    type="password" name="pass" id="pass" />
+                    <mat-error class="alert alert-danger" *ngIf="pass.touched && !pass.valid">
+                        <div *ngIf="pass.errors.required">Password is Required!</div>
+                        <div *ngIf="pass.errors.minlength">Min 8 Characters</div>
+                    </mat-error>
+                </mat-form-field>
+
+                <input type="submit" [disabled]="!form.valid || loading" name="register" value="REGISTER" id="submit" class="btn-c mat-raised-button mat-primary block tmar" />
+                <span class="tpad tblue tmar">Already have an account? <a routerLink="/login">Login</a> now.</span>
+
+            </form>
+        </div>
+    </mat-card>
+

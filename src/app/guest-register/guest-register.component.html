@@ -1,0 +1,42 @@
+
+    <mat-card>
+        <!-- Spinner -->
+        <div *ngIf="loading">
+            <mat-spinner  style="margin:0 auto;" class="mat-display-4"></mat-spinner>
+        </div>
+        <div *ngIf="!loading">
+            <h2 class="tpad">Register</h2>
+            <form [formGroup]="form" (ngSubmit)="register()">
+                <mat-error *ngIf="invalidRegister" id="err" class="alert alert-danger">{{ formError }}</mat-error>
+                
+                <mat-form-field class="block tmar">
+                    <mat-label>Name</mat-label>
+                    <input matInput
+                    formControlName="name"
+                    type="text" name="name" id="name" class="form-control form-c" />
+                    <mat-error class="alert alert-danger" *ngIf="name.touched && !name.valid">
+                        <div *ngIf="name.errors.required">Name is required!</div>
+                        <div *ngIf="name.errors.minlength">Minlength is 3</div>
+                        <div *ngIf="name.errors.words">Only Words are Allowed!</div>
+                    </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="block tmar">
+                    <mat-label>Age</mat-label>
+                    <input matInput
+                    formControlName="age"
+                    type="text" name="age" id="age" class="form-control form-c" />
+                    <mat-error class="alert alert-danger" *ngIf="age.touched && !age.valid">
+                        <div *ngIf="age.errors.required">Age is Required!</div>
+                        <div *ngIf="age.errors.ageGroup">Min & Max Age is 3 && 99 Resp.</div>
+                    </mat-error>
+                </mat-form-field>
+
+                <input type="submit" [disabled]="!form.valid || loading" name="register" value="REGISTER" id="submit" class="btn-c block mat-raised-button mat-primary tmar" />
+                <span class="tpad tblue">Already have an account? <a routerLink="/login">Login</a> now.</span>
+
+            </form>
+        </div>
+    </mat-card>
+
+

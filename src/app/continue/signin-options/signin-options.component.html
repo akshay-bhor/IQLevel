@@ -1,0 +1,17 @@
+<mat-card-title>How Would You Like to Continue?</mat-card-title>
+        <mat-card-content>
+            <a routerLink="/login" class="block btn-c tmar" mat-raised-button color="primary">Login using Email and Password</a>
+            <a routerLink="/register" class="block btn-c tmar" mat-raised-button color="accent">Sign up using Email and Password</a>
+            <a routerLink="/guest-register" class="block" mat-raised-button color="link">Continue as Guest</a>
+        </mat-card-content>
+        
+        <mat-card-subtitle class="text-center">
+            Or 
+        </mat-card-subtitle>
+        <a class="google-btn block" 
+        href="https://accounts.google.com/o/oauth2/auth?scope={{ oauthProviderService.oauthScope }}&redirect_uri={{ oauthProviderService.oauthRedirectURL }}&response_type=code&client_id={{ oauthProviderService.oauthClientID }}&access_type=online">
+            <div class="google-icon-wrapper">
+              <img class="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg"/>
+            </div>
+            <p class="btn-text text-center"><b>Sign in with google</b></p>
+        </a>

@@ -1,0 +1,33 @@
+<mat-toolbar color="primary" role="heading">
+  <mat-toolbar-row>
+    <button mat-icon-button (click)="snav.toggle();">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <h1><a routerLink="/" class="twhite" (click)="sidebarToggle(snav, 1);">IQLEVEL</a></h1>
+  </mat-toolbar-row>
+  
+</mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #snav mode="over" class="fixed">
+    <mat-nav-list>
+      <div class="mat-headline active tpad text-center" *ngIf="authService.isLoggedIn()" style="padding-top: 60px;">
+        Hi, {{ authService.getUserData.name ? authService.getUserData.name : authService.getUserData.username }}
+        <span class="mat-subheading-2 block" style="margin-bottom: 0">Age - {{ authService.getUserAge }}</span>
+        <span class="mat-subheading-2 block">IQ - {{ authService.getUserScore }}</span>
+      </div>
+      <a mat-list-item *ngIf="!authService.isLoggedIn()" routerLink="/login" (click)="sidebarToggle(snav);" class="with-icon" style="padding-top: 60px;"><mat-icon>person</mat-icon>&nbsp; Login</a>
+      <a mat-list-item *ngIf="!authService.isLoggedIn()" routerLink="/register" (click)="sidebarToggle(snav);" class="with-icon"><mat-icon>person_add</mat-icon>&nbsp; Register</a>
+      <a mat-list-item *ngIf="!authService.isLoggedIn()" routerLink="/questions" (click)="sidebarToggle(snav);" class="with-icon"><mat-icon>help</mat-icon>&nbsp; Questions</a>
+      <a mat-list-item *ngIf="authService.isLoggedIn()" (click)="authService.logout(); sidebarToggle(snav);" class="with-icon"><mat-icon>power_settings_new</mat-icon>&nbsp; Logout</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div [ngClass]="{ 
+      'account': !routeHome,
+      'block': routeHome
+   }">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

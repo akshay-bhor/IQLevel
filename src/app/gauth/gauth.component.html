@@ -1,0 +1,18 @@
+
+    <mat-card>
+        <!-- Spinner -->
+        <div *ngIf="loading">
+            <mat-spinner  style="margin:0 auto;" class="mat-display-4"></mat-spinner>
+            <div class='big tmar text-center bold'>Signing in with Google...</div>
+        </div>
+        <div *ngIf="!loading && invalidSignin">
+            <div class="block text-center">
+                <mat-icon class="tred text-center mat-icon-big">error</mat-icon>
+            </div>
+            <div class="block tpad text-center bold">{{ errMsg }}</div>
+
+            <a href="/continue" class="btn-c mat-raised-button mat-primary block tmar"> Try Again</a>
+        </div>
+    </mat-card>
+
+

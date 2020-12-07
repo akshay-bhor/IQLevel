@@ -1,0 +1,34 @@
+
+    <mat-card>
+        <!-- Spinner -->
+        <div *ngIf="loading">
+            <mat-spinner  style="margin:0 auto;" class="mat-display-4"></mat-spinner>
+        </div>
+        <div *ngIf="!loading">
+            <h2>Login</h2>
+            <form class="form-login" #f="ngForm" (ngSubmit)="login(f.value)">
+                <mat-error *ngIf="invalidLogin" class="alert alert-danger">Invalid Username and/or Password</mat-error>
+
+                <mat-form-field class="block tmar">
+                    <mat-label>
+                        Username
+                    </mat-label>
+                    <input matInput type="text" name="client" ngModel #fname="ngModel" placeholder="Username or Email" required />
+                </mat-form-field>
+
+                <mat-form-field class="block">
+                    <mat-label>
+                        Password
+                    </mat-label>
+                    <input matInput type="password" name="pass" ngModel #pass="ngModel" required />
+                    <mat-error class="alert alert-danger" *ngIf="pass.touched && !pass.valid">Password required</mat-error>
+                </mat-form-field>
+                
+                <input type="submit" [disabled]="!f.valid || loading" name="login" value="Login" id="loginBtn" class="btn-c mat-raised-button mat-primary block tmar" />
+                <span class="tpad tblue tmar">Don't have an account? <a routerLink="/register">Register</a> now.</span>
+                
+            </form>
+        </div>
+    </mat-card>
+   
+

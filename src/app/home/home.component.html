@@ -1,0 +1,42 @@
+  <div class="jumbotron home-main block"></div>
+
+        <div class="home-main-text text-center">
+          <h1 class="mat-display-2 block">Play a Free IQ Game</h1>
+          <span class="block mat-h3">
+            Put Your Mind to the Test, Improve Your Mental, Reasoning, and Problem Solving Ability.
+          </span>
+          <a *ngIf="!authService.isLoggedIn()" routerLink="/continue" mat-raised-button color="primary">Play the Game</a>
+          <a *ngIf="authService.isLoggedIn()" routerLink="/level" mat-raised-button color="primary">Start</a>
+        </div>
+
+    <div class="clr"></div>
+
+    <div class="block home-bottom">
+      <div class="hbottom-text-up text-center">
+        <h2 class="mat-display-2">Why Play our IQ Game</h2>
+      </div>
+      <div class="tmar-60">
+        <div class="col-md-6">
+          <span class="tpad home-p">
+            <p class="mat-h2">The purpose of taking an IQ test is to measure intelligence, to measure one’s reasoning and problem solving abilities; and to analyze one’s mathematical understanding, language abilities as well as short term memory and information processing speed. 
+              By playing our game, you can improve your weaknessess and increase your IQ.
+            </p>
+          </span>
+        </div>
+        <div class="col-md-6 home-bottom-img1"></div>
+      </div> 
+    </div>
+
+    <div class="block home-bottom">
+      <div class="hbottom-text-up text-center">
+        <h2 class="mat-display-2">What is an IQ?</h2>
+      </div>
+      <div class="tmar-60">
+      <div class="col-md-6 home-bottom-img2"></div>
+        <div class="col-md-6">
+          <p class="mat-h2">An Intelligence Quotient indicates a person’s mental abilities relative to others. Everyone has numerous specific mental abilities, some of which can be measured accurately and are reliable predictors of academic and financial success.</p>
+            <p class="mat-h2">An IQ score is calculated based on a norm group with an average score of 100 and a standard deviation of 15. The standard deviation of 15 means, 68% of individuals have scored between 85 and 115. This means the average score will always be 100 and 95% of individuals will score between 70 and 130.</p>
+          
+        </div>
+      </div>
+    </div>
