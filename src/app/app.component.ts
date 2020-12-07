@@ -36,7 +36,7 @@ export class AppComponent {
     if(chk == 0) {
       sideNav.close();
     }
-    else {s
+    else {
       //CHECK IF NEED TO CLOSE
       if(sideNav.open)
         sideNav.close();
