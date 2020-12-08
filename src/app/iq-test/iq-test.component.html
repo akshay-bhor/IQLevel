@@ -22,7 +22,7 @@
             <div id="options" class="tmar">
                 <div class="block">
                     <div *ngIf="queres.questions[current].optiontype == 1">
-                        <div *ngFor="let op of queres.questions[current].options">
+                        <div *ngFor="let op of queres.questions[current].options" class="col-md-6">
                             <mat-card id="op-{{op.opid}}" class="tmar block pointer" [ngClass]="{
                                 'bg-primary': (ans_arr && ans_arr.indexOf(op.opid) != -1)
                             }" (click)="selAns(op.opid)">
