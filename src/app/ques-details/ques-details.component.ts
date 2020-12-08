@@ -52,6 +52,11 @@ export class QuesDetailsComponent implements OnInit {
       if(res.status == 1) {
         this.queres = res;
         if(res.desc) this.setDesc(res.desc);
+
+        // If question has image set og:image meta tag
+        if(this.queres.question.questiontype == 2 || this.queres.question.questiontype == 3) {
+          this.SEO.setOGImg('https://www.iqlevel.net/uploads/questions/' + this.queres.question.queimg[0]);
+        }
       }
       else {
         this.errFlag = true;

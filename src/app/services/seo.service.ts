@@ -13,6 +13,10 @@ export class SeoService {
   }
 
   public setDesc(desc) {
-    this.meta.updateTag({ name: 'description', content: desc })
+    this.meta.updateTag({ name: 'description', content: desc });
+  }
+
+  public setOGImg(imgURL) {
+    this.meta.updateTag({ property: 'og:image', content: imgURL });
   }
 }
