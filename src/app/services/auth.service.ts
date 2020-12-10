@@ -25,18 +25,38 @@ export class AuthService {
   }
 
   logout() {
-    this.router.navigate(['/level']).then(() => {
-      localStorage.removeItem('token');
-      localStorage.removeItem('level');
-      localStorage.removeItem('clevel');
-      localStorage.removeItem('score');
+    
+    if(this.router.url != '/level') {
+      this.router.navigate(['/level']).then(success => {
+        if(success) {
+          this.clearAuthCredentials();
+    
+          this.router.navigate(['/']);
+        }
+        else {
+  
+        }
+      },
+      err => {
+        
+      });
+    }
+    else {
+      this.clearAuthCredentials();
 
       this.router.navigate(['/']);
-    });
+    }
   }
 
   isLoggedIn() {
     return tokenNotExpired();
+  }
+
+  clearAuthCredentials() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('level');
+    localStorage.removeItem('clevel');
+    localStorage.removeItem('score');
   }
 
   get getUserData() {
