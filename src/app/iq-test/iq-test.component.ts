@@ -46,7 +46,7 @@ export class IqTestComponent implements OnInit {
 
   getQuestion() {
     this.clearParams();
-    let url = 'https://www.iqlevel.net/api/new-get-iq-question';
+    let url = 'https://www.iqlevel.net/api/get-iq-question';
     this.httpSubscription = this.dataService.authget(url).subscribe(res => {
       this.loading = false;
       if(res.status == 1) {
@@ -78,7 +78,7 @@ export class IqTestComponent implements OnInit {
   }
 
   submitAns() {
-    let url = 'https://www.iqlevel.net/api/new-iq-answer';
+    let url = 'https://www.iqlevel.net/api/iq-answer';
     let pdata:any = {};
     pdata.qid = this.queres.questions[this.current].qid;
     pdata.qno = (this.current + 1);

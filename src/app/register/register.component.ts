@@ -5,7 +5,6 @@ import { AppError } from './../error/app-error';
 import { AgeValidator } from './age.validators';
 import { UnameValidator } from './uname.validators';
 import { Router } from '@angular/router';
-import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { SeoService } from './../services/seo.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -21,13 +20,10 @@ export class RegisterComponent implements OnInit {
   loading:boolean;
   url: string;
 
-  constructor(public authService: AuthService, private router: Router, private SEO: SeoService, private postService: DataService) { }
+  constructor(private router: Router, private SEO: SeoService, private postService: DataService) { }
 
   ngOnInit(): void {
     this.SEO.setTitle('Register');
-    if(this.authService.isLoggedIn()) {
-      this.router.navigate(['/level']);
-    }
   }
 
   form = new FormGroup({

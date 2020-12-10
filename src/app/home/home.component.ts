@@ -1,6 +1,4 @@
-import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { SeoService } from './../services/seo.service';
 
 @Component({
@@ -10,12 +8,9 @@ import { SeoService } from './../services/seo.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(public authService: AuthService, private route: Router, private SEO: SeoService) { }
+  constructor(private SEO: SeoService) { }
 
   ngOnInit(): void {
-    if(this.authService.isLoggedIn()) {
-      this.route.navigate(['/level']);
-    }
 
     // Set title
     this.SEO.setDesc('Take the most accurate Online IQ Test. Find out your IQ Level with IQ Test Questions and Answers. Find IQ Score. Free IQ Test. Play IQ Game, Solve IQ Puzzles & Boost Your IQ.');

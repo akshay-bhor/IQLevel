@@ -1,4 +1,4 @@
-import { QuesGuardService } from './services/ques-guard.service';
+import { LoggedInGuardService } from './services/loggedin-guard.service';
 import { MaterialModule } from './material.module';
 import { LevelAccessGuardService } from './services/level-access-guard.service';
 import { DataService } from './services/data.service';
@@ -67,18 +67,18 @@ import { QueSkeletonComponent } from './que-skeleton/que-skeleton.component';
       preventDuplicates: true
     }),
     RouterModule.forRoot([
-      { path: '', component: HomeComponent },
-      { path: 'login', component: LoginComponent },
+      { path: '', component: HomeComponent, canActivate: [LoggedInGuardService] },
+      { path: 'login', component: LoginComponent, canActivate: [LoggedInGuardService] },
       { path: 'level/:levelid', component: QuestionComponent, canActivate: [AuthGuardService, LevelAccessGuardService] },
       { path: 'level', component: LevelComponent, canActivate: [AuthGuardService] },
-      { path: 'register', component: RegisterComponent },
-      { path: 'continue', component: ContinueComponent },
-      { path: 'gauth', component: GauthComponent },
-      { path: 'guest-register', component: GuestRegisterComponent },
+      { path: 'register', component: RegisterComponent, canActivate: [LoggedInGuardService] },
+      { path: 'continue', component: ContinueComponent, canActivate: [LoggedInGuardService] },
+      { path: 'gauth', component: GauthComponent, canActivate: [LoggedInGuardService] },
+      { path: 'guest-register', component: GuestRegisterComponent, canActivate: [LoggedInGuardService] },
       { path: 'iq-test', component: IqTestComponent, canActivate: [AuthGuardService]  },
       { path: 'result/:test_key', component: ResultComponent, canActivate: [AuthGuardService]  },
-      { path: 'questions/:qid/:que', component: QuesDetailsComponent, canActivate: [QuesGuardService] },
-      { path: 'questions', component: QuestionsComponent, canActivate: [QuesGuardService] },
+      { path: 'questions/:qid/:que', component: QuesDetailsComponent, canActivate: [LoggedInGuardService] },
+      { path: 'questions', component: QuestionsComponent, canActivate: [LoggedInGuardService] },
       { path:'**', component: HomeComponent }
     ]),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),

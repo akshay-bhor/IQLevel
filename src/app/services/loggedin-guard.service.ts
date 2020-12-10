@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 @Injectable({
   providedIn: 'root'
 })
-export class QuesGuardService implements CanActivate {
+export class LoggedInGuardService implements CanActivate {
 
   constructor(private authService: AuthService, private router: Router) { }
 

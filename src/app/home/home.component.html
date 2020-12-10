@@ -5,8 +5,7 @@
           <span class="block mat-h3">
             Put Your Mind to the Test, Improve Your Mental, Reasoning, and Problem Solving Ability.
           </span>
-          <a *ngIf="!authService.isLoggedIn()" routerLink="/continue" mat-raised-button color="primary">Play the Game</a>
-          <a *ngIf="authService.isLoggedIn()" routerLink="/level" mat-raised-button color="primary">Start</a>
+          <a routerLink="continue" mat-raised-button color="primary">Play the Game</a>
         </div>
 
     <div class="clr"></div>

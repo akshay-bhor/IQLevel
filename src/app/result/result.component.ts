@@ -1,7 +1,6 @@
 import { UnauthorisedError } from './../error/unauth';
 import { NetworkError } from './../error/network-error';
 import { AppError } from './../error/app-error';
-import { ToastService } from './../services/toast.service';
 import { SeoService } from './../services/seo.service';
 import { DataService } from './../services/data.service';
 import { ActivatedRoute } from '@angular/router';
@@ -43,7 +42,7 @@ export class ResultComponent implements OnInit {
     let postData:any = {};
     postData.tkey = this.test_key;
 
-    let url = 'https://www.iqlevel.net/api/new-get-iq';
+    let url = 'https://www.iqlevel.net/api/get-iq';
     this.httpSubscription = this.dataService.authpost(url, postData).subscribe(res => {
       this.loading = false;
       if(res.status == 1) {

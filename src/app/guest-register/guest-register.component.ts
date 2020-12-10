@@ -5,7 +5,6 @@ import { AgeValidator } from './../register/age.validators';
 import { UnameValidator } from './../register/uname.validators';
 import { DataService } from './../services/data.service';
 import { Router } from '@angular/router';
-import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { SeoService } from './../services/seo.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -21,12 +20,9 @@ export class GuestRegisterComponent implements OnInit {
   loading:boolean;
   url: string;
 
-  constructor(private authService: AuthService, private router: Router, private SEO: SeoService, private postService: DataService) { }
+  constructor(private router: Router, private SEO: SeoService, private postService: DataService) { }
 
   ngOnInit(): void {
-    if(this.authService.isLoggedIn()) {
-      this.router.navigate(['/level']);
-    }
     this.SEO.setTitle('Guest Register');
   }
 
