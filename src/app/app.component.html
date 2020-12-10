@@ -3,7 +3,10 @@
     <button mat-icon-button (click)="snav.toggle();">
       <mat-icon>menu</mat-icon>
     </button>
-    <h1><a routerLink="/" class="twhite" (click)="sidebarToggle(snav, 1);">IQLEVEL</a></h1>
+    <h1>
+      <a *ngIf="!authService.isLoggedIn()" routerLink="/" class="twhite" (click)="sidebarToggle(snav, 1);">IQLEVEL</a>
+      <a *ngIf="authService.isLoggedIn()" routerLink="/level" class="twhite" (click)="sidebarToggle(snav, 1);">IQLEVEL</a>
+    </h1>
   </mat-toolbar-row>
   
 </mat-toolbar>
@@ -16,9 +19,11 @@
         <span class="mat-subheading-2 block" style="margin-bottom: 0">Age - {{ authService.getUserAge }}</span>
         <span class="mat-subheading-2 block">IQ - {{ authService.getUserScore }}</span>
       </div>
-      <a mat-list-item *ngIf="!authService.isLoggedIn()" routerLink="/login" (click)="sidebarToggle(snav);" class="with-icon" style="padding-top: 60px;"><mat-icon>person</mat-icon>&nbsp; Login</a>
-      <a mat-list-item *ngIf="!authService.isLoggedIn()" routerLink="/register" (click)="sidebarToggle(snav);" class="with-icon"><mat-icon>person_add</mat-icon>&nbsp; Register</a>
-      <a mat-list-item *ngIf="!authService.isLoggedIn()" routerLink="/questions" (click)="sidebarToggle(snav);" class="with-icon"><mat-icon>help</mat-icon>&nbsp; Questions</a>
+      <div class="block" *ngIf="!authService.isLoggedIn()">
+        <a mat-list-item routerLink="/login" (click)="sidebarToggle(snav);" class="with-icon" style="padding-top: 60px;"><mat-icon>person</mat-icon>&nbsp; Login</a>
+        <a mat-list-item routerLink="/register" (click)="sidebarToggle(snav);" class="with-icon"><mat-icon>person_add</mat-icon>&nbsp; Register</a>
+        <a mat-list-item routerLink="/questions" (click)="sidebarToggle(snav);" class="with-icon"><mat-icon>help</mat-icon>&nbsp; Questions</a>
+      </div>
       <a mat-list-item *ngIf="authService.isLoggedIn()" (click)="authService.logout(); sidebarToggle(snav);" class="with-icon"><mat-icon>power_settings_new</mat-icon>&nbsp; Logout</a>
     </mat-nav-list>
   </mat-sidenav>

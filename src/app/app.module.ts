@@ -33,6 +33,7 @@ import { environment } from '../environments/environment';
 import { GauthComponent } from './gauth/gauth.component';
 import { SigninOptionsComponent } from './continue/signin-options/signin-options.component';
 import { QueSkeletonComponent } from './que-skeleton/que-skeleton.component';
+import { IqExitGuardService } from './iq-test/iq-exit-guard.service';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,7 @@ import { QueSkeletonComponent } from './que-skeleton/que-skeleton.component';
       { path: 'continue', component: ContinueComponent, canActivate: [LoggedInGuardService] },
       { path: 'gauth', component: GauthComponent, canActivate: [LoggedInGuardService] },
       { path: 'guest-register', component: GuestRegisterComponent, canActivate: [LoggedInGuardService] },
-      { path: 'iq-test', component: IqTestComponent, canActivate: [AuthGuardService]  },
+      { path: 'iq-test', component: IqTestComponent, canActivate: [AuthGuardService], canDeactivate: [IqExitGuardService]  },
       { path: 'result/:test_key', component: ResultComponent, canActivate: [AuthGuardService]  },
       { path: 'questions/:qid/:que', component: QuesDetailsComponent, canActivate: [LoggedInGuardService] },
       { path: 'questions', component: QuestionsComponent, canActivate: [LoggedInGuardService] },

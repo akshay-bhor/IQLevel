@@ -5,16 +5,18 @@ import { ToastService } from './../services/toast.service';
 import { NetworkError } from './../error/network-error';
 import { AppError } from './../error/app-error';
 import { DataService } from './../services/data.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { CanComponentDeactivate } from './iq-exit-guard.service';
 
 @Component({
   selector: 'app-iq-test',
   templateUrl: './iq-test.component.html',
   styleUrls: ['./iq-test.component.css']
 })
-export class IqTestComponent implements OnInit {
+export class IqTestComponent implements OnInit, CanComponentDeactivate {
 
   httpSubscription;
   test_key;
@@ -185,6 +187,13 @@ export class IqTestComponent implements OnInit {
     this.ans_arr.length = 0;
     this.current = i;
     this.SEO.setTitle(this.stripHtml(this.queres.questions[this.current].question));
+  }
+
+  canDeactivate():Observable<boolean> | Promise<boolean> | boolean {
+    if(this.qno == this.answered.length && !this.loading)
+      return true;
+    else
+      return confirm('Are you sure you want to quit?');
   }
 
   ngOnDestroy() {

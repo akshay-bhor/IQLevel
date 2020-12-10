@@ -25,12 +25,14 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('level');
-    localStorage.removeItem('clevel');
-    localStorage.removeItem('score');
+    this.router.navigate(['/level']).then(() => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('level');
+      localStorage.removeItem('clevel');
+      localStorage.removeItem('score');
 
-    this.router.navigate(['/']);
+      this.router.navigate(['/']);
+    });
   }
 
   isLoggedIn() {
