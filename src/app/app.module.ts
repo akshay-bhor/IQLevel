@@ -1,6 +1,6 @@
 import { QuesGuardService } from './services/ques-guard.service';
 import { MaterialModule } from './material.module';
-import { QueAccessGuardService } from './services/que-access-guard.service';
+import { LevelAccessGuardService } from './services/level-access-guard.service';
 import { DataService } from './services/data.service';
 import { RegisterComponent } from './register/register.component';
 import { RouterModule } from '@angular/router';
@@ -69,7 +69,7 @@ import { QueSkeletonComponent } from './que-skeleton/que-skeleton.component';
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'login', component: LoginComponent },
-      { path: 'level/:levelid', component: QuestionComponent, canActivate: [AuthGuardService, QueAccessGuardService] },
+      { path: 'level/:levelid', component: QuestionComponent, canActivate: [AuthGuardService, LevelAccessGuardService] },
       { path: 'level', component: LevelComponent, canActivate: [AuthGuardService] },
       { path: 'register', component: RegisterComponent },
       { path: 'continue', component: ContinueComponent },

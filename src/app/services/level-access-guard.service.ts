@@ -5,7 +5,7 @@ import { CanActivate, Router, ActivatedRouteSnapshot, RouterStateSnapshot } from
 @Injectable({
   providedIn: 'root'
 })
-export class QueAccessGuardService implements CanActivate {
+export class LevelAccessGuardService implements CanActivate {
 
   constructor(private router :Router) { }
 
