@@ -1,7 +1,7 @@
 import { AuthService } from './services/auth.service';
 import { Component } from '@angular/core';
 import { SwupdateService } from './services/swupdate.service';
-import { NavigationEnd, Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 
 declare let gtag:Function;
 
@@ -12,6 +12,7 @@ declare let gtag:Function;
 })
 export class AppComponent {
   routeHome: boolean;
+  routeLoading: boolean = false;
 
   constructor(public authService: AuthService, private swUpdate: SwupdateService,
     public router:Router) {
@@ -27,6 +28,13 @@ export class AppComponent {
           //Check if on homepage
           if(event.urlAfterRedirects == '/') this.routeHome = true;
           else this.routeHome = false;
+
+          //End route loading
+          this.routeLoading = false;
+        }
+
+        if(event instanceof NavigationStart) {
+          this.routeLoading = true;
         }
         
       });

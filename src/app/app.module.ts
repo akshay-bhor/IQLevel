@@ -34,6 +34,7 @@ import { GauthComponent } from './gauth/gauth.component';
 import { SigninOptionsComponent } from './continue/signin-options/signin-options.component';
 import { QueSkeletonComponent } from './que-skeleton/que-skeleton.component';
 import { IqExitGuardService } from './iq-test/iq-exit-guard.service';
+import { QuesDetailsResolverService } from './ques-details/ques-details-resolver.service';
 
 @NgModule({
   declarations: [
@@ -78,7 +79,13 @@ import { IqExitGuardService } from './iq-test/iq-exit-guard.service';
       { path: 'guest-register', component: GuestRegisterComponent, canActivate: [LoggedInGuardService] },
       { path: 'iq-test', component: IqTestComponent, canActivate: [AuthGuardService], canDeactivate: [IqExitGuardService]  },
       { path: 'result/:test_key', component: ResultComponent, canActivate: [AuthGuardService]  },
-      { path: 'questions/:qid/:que', component: QuesDetailsComponent, canActivate: [LoggedInGuardService] },
+      { 
+        path: 'questions/:qid/:que', 
+        component: QuesDetailsComponent, 
+        canActivate: [LoggedInGuardService], 
+        resolve: { queData: QuesDetailsResolverService },
+        data: { api_endpoint: 'que-details' }
+      },
       { path: 'questions', component: QuestionsComponent, canActivate: [LoggedInGuardService] },
       { path:'**', component: HomeComponent }
     ]),

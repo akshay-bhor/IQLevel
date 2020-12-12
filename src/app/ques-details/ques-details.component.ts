@@ -2,7 +2,7 @@ import { ContinueDialogComponent } from './../continue-dialog/continue-dialog.co
 import { NetworkError } from './../error/network-error';
 import { AppError } from './../error/app-error';
 import { SeoService } from './../services/seo.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DataService } from './../services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -38,20 +38,19 @@ export class QuesDetailsComponent implements OnInit {
       this.question = params.get('que');
     });
     this.setTitle(this.question);
-    this.getQuestion(this.qid);
+    // this.getQuestion(this.qid);
+    
+    //GET Data from resolver
+    this.route.data.subscribe((data: Data) => {
+      this.queres = data['queData'];
+
+      this.loadQueData();
+    })
   }
 
-  getQuestion(queid) {
-    this.loading = true;
-    this.clearParams();
-    let url = 'https://www.iqlevel.net/api/que-details';
-    let data:any = {};
-    data.qid = queid;
-    this.httpSubscription = this.dataService.post(url, data).subscribe(res => {
-      this.loading = false;
-      if(res.status == 1) {
-        this.queres = res;
-        if(res.desc) this.setDesc(res.desc);
+  loadQueData() {
+      if(this.queres.status == 1) {
+        if(this.queres.desc) this.setDesc(this.queres.desc);
 
         // If question has image set og:image meta tag
         if(this.queres.question.questiontype == 2 || this.queres.question.questiontype == 3) {
@@ -60,18 +59,41 @@ export class QuesDetailsComponent implements OnInit {
       }
       else {
         this.errFlag = true;
-        throw res.err;
+        throw this.queres.err;
       }
-    },
-    (error: AppError) => {
-      this.errFlag = true;
-      this.loading = false;
-      if(error instanceof NetworkError)
-        throw 'No Internet!';
-      else
-        throw 'Unexpected Error Occured!';
-    });
   }
+
+  // getQuestion(queid) {
+  //   this.loading = true;
+  //   this.clearParams();
+  //   let url = 'https://www.iqlevel.net/api/que-details';
+  //   let data:any = {};
+  //   data.qid = queid;
+  //   this.httpSubscription = this.dataService.post(url, data).subscribe(res => {
+  //     this.loading = false;
+  //     if(res.status == 1) {
+  //       this.queres = res;
+  //       if(res.desc) this.setDesc(res.desc);
+
+  //       // If question has image set og:image meta tag
+  //       if(this.queres.question.questiontype == 2 || this.queres.question.questiontype == 3) {
+  //         this.SEO.setOGImg('https://www.iqlevel.net/uploads/questions/' + this.queres.question.queimg[0]);
+  //       }
+  //     }
+  //     else {
+  //       this.errFlag = true;
+  //       throw res.err;
+  //     }
+  //   },
+  //   (error: AppError) => {
+  //     this.errFlag = true;
+  //     this.loading = false;
+  //     if(error instanceof NetworkError)
+  //       throw 'No Internet!';
+  //     else
+  //       throw 'Unexpected Error Occured!';
+  //   });
+  // }
 
   openDialog() {
     const dialogRef = this.dialog.open(ContinueDialogComponent, {
