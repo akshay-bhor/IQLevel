@@ -1,5 +1,6 @@
-<mat-progress-bar mode="indeterminate" *ngIf="routeLoading"></mat-progress-bar>
+
 <mat-toolbar color="primary" role="heading">
+  <mat-progress-bar mode="indeterminate" *ngIf="routeLoading"></mat-progress-bar>
   <mat-toolbar-row>
     <button mat-icon-button (click)="snav.toggle();">
       <mat-icon>menu</mat-icon>

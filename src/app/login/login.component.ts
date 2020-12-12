@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   constructor(private router:Router, private service: AuthService, private SEO: SeoService) { }
 
   ngOnInit(): void {
-    this.setTitle();
+    this.SEO.setTitle('Login');
     if(this.service.isLoggedIn()) {
       this.router.navigate(['/level']);
     }
@@ -46,9 +46,5 @@ export class LoginComponent implements OnInit {
     }
       else throw 'Unexpected Error Occurred!';
     });
-  }
-
-  setTitle() {
-    this.SEO.setTitle('Login');
   }
 }

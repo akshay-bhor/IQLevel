@@ -62,7 +62,7 @@ export class QuestionComponent implements OnInit {
         if(res.time) {
           this.duration = res.time;
           this.cTimer();
-          this.SEO.setTitle(this.stripHtml(res.question.question));
+          this.SEO.setTitle(res.question.question);
         }
       }
       else {
@@ -202,12 +202,6 @@ export class QuestionComponent implements OnInit {
     this.errFlag = false;
     this.ans_arr.length = 0;
     this.cans.length = 0;
-  }
-
-  stripHtml(html) {
-   var tmp = document.createElement("DIV");
-   tmp.innerHTML = html;
-   return tmp.textContent || tmp.innerText || "";
   }
 
   reload() {

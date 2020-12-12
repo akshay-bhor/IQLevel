@@ -35,6 +35,7 @@ import { SigninOptionsComponent } from './continue/signin-options/signin-options
 import { QueSkeletonComponent } from './que-skeleton/que-skeleton.component';
 import { IqExitGuardService } from './iq-test/iq-exit-guard.service';
 import { QuesDetailsResolverService } from './ques-details/ques-details-resolver.service';
+import { QuestionsResolverService } from './questions/questions-resolver.service';
 
 @NgModule({
   declarations: [
@@ -83,10 +84,15 @@ import { QuesDetailsResolverService } from './ques-details/ques-details-resolver
         path: 'questions/:qid/:que', 
         component: QuesDetailsComponent, 
         canActivate: [LoggedInGuardService], 
-        resolve: { queData: QuesDetailsResolverService },
-        data: { api_endpoint: 'que-details' }
+        resolve: { queData: QuesDetailsResolverService }
       },
-      { path: 'questions', component: QuestionsComponent, canActivate: [LoggedInGuardService] },
+      { 
+        path: 'questions', 
+        component: QuestionsComponent, 
+        canActivate: [LoggedInGuardService],
+        resolve: { ques: QuestionsResolverService },
+        runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+      },
       { path:'**', component: HomeComponent }
     ]),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),

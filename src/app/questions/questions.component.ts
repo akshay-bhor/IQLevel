@@ -1,6 +1,6 @@
 import { NetworkError } from './../error/network-error';
 import { AppError } from './../error/app-error';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Data, Router } from '@angular/router';
 import { SeoService } from './../services/seo.service';
 import { DataService } from './../services/data.service';
 import { Component, OnInit } from '@angular/core';
@@ -37,40 +37,56 @@ export class QuestionsComponent implements OnInit {
       else
         this.page = 1;
       //GET QUESTIONS
-      this.getQuestions(this.page);
+      this.route.data.subscribe((data: Data) => {
+        this.clearParams();
+        this.que = data['ques'];
+
+        this.loadQues();
+      })
     });
 
   }
 
-  getQuestions(p) { 
-    if(this.loading) return;
-    if(!this.hasNext) return;
-    this.clearParams();
-    let data:any = {};
-    data.p = p;
-    let url = 'https://www.iqlevel.net/api/questions';
-    this.loading = true;
+  loadQues() {
 
-    this.httpSubscription = this.dataService.post(url, data).subscribe(res => {
-      this.loading = false;
-      if(res.status == 1) {
-        this.que = res;
-        this.hasNext = res.hasNext;
-      }
-      else {
-        this.errFlag = true;
-        throw res.err;
-      }
-    },
-    (error: AppError) => {
-      this.loading = false;
-      this.errFlag = true;
-      if(error instanceof NetworkError)
-        throw 'No Internet';
-      throw 'Unexpected Error Occurred!';
+    if(this.que.status == 1) {
+      this.hasNext = this.que.hasNext;
     }
-    );
+    else {
+      this.errFlag = true;
+      throw this.que.err;
+    }
   }
+
+  // getQuestions(p) { 
+  //   if(this.loading) return;
+  //   if(!this.hasNext) return;
+  //   this.clearParams();
+  //   let data:any = {};
+  //   data.p = p;
+  //   let url = 'https://www.iqlevel.net/api/questions';
+  //   this.loading = true;
+
+  //   this.httpSubscription = this.dataService.post(url, data).subscribe(res => {
+  //     this.loading = false;
+  //     if(res.status == 1) {
+  //       this.que = res;
+  //       this.hasNext = res.hasNext;
+  //     }
+  //     else {
+  //       this.errFlag = true;
+  //       throw res.err;
+  //     }
+  //   },
+  //   (error: AppError) => {
+  //     this.loading = false;
+  //     this.errFlag = true;
+  //     if(error instanceof NetworkError)
+  //       throw 'No Internet';
+  //     throw 'Unexpected Error Occurred!';
+  //   }
+  //   );
+  // }
 
   ngOnDestroy() {
     this.clearParams();

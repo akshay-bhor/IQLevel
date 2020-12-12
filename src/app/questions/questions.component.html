@@ -1,9 +1,9 @@
 
     <h2 class="mat-headline bold">Questions</h2>
     <mat-divider></mat-divider>
-    <mat-card *ngIf="loading" class="block tmar">
+    <!-- <mat-card *ngIf="loading" class="block tmar">
         <mat-spinner  style="margin:0 auto;" class="mat-display-4"></mat-spinner>
-    </mat-card>
+    </mat-card> -->
     <div *ngIf="!loading && !errFlag">
         <a class="block tmar mat-card" *ngFor="let q of que.questions" routerLink="./{{ q.qid }}/{{ q.slug }}"> 
             <mat-card-title class="bold" *ngIf="q.questiontype == 1 || q.questiontype == 3" 

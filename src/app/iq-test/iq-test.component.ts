@@ -59,7 +59,7 @@ export class IqTestComponent implements OnInit, CanComponentDeactivate {
           this.qno = res.questions.length;
           this.current = 0;
           this.cTimer();
-          this.SEO.setTitle(this.stripHtml(res.questions[this.current].question));
+          this.SEO.setTitle(res.questions[this.current].question);
         }
       }
       else {
@@ -174,7 +174,7 @@ export class IqTestComponent implements OnInit, CanComponentDeactivate {
     this.ansres = null;
     this.ans_arr.length = 0;
     this.current++;
-    this.SEO.setTitle(this.stripHtml(this.queres.questions[this.current].question));
+    this.SEO.setTitle(this.queres.questions[this.current].question);
   }
 
   selQue(i) {
@@ -186,7 +186,7 @@ export class IqTestComponent implements OnInit, CanComponentDeactivate {
     this.ansres = null;
     this.ans_arr.length = 0;
     this.current = i;
-    this.SEO.setTitle(this.stripHtml(this.queres.questions[this.current].question));
+    this.SEO.setTitle(this.queres.questions[this.current].question);
   }
 
   canDeactivate():Observable<boolean> | Promise<boolean> | boolean {
@@ -214,12 +214,6 @@ export class IqTestComponent implements OnInit, CanComponentDeactivate {
     this.errFlag = false;
     this.ans_arr.length = 0;
     this.answered.length = 0;
-  }
-
-  stripHtml(html) {
-   var tmp = document.createElement("DIV");
-   tmp.innerHTML = html;
-   return tmp.textContent || tmp.innerText || "";
   }
 
   reload() {

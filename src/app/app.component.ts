@@ -1,7 +1,7 @@
 import { AuthService } from './services/auth.service';
 import { Component } from '@angular/core';
 import { SwupdateService } from './services/swupdate.service';
-import { NavigationEnd, NavigationStart, Router } from '@angular/router';
+import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 
 declare let gtag:Function;
 
@@ -34,7 +34,13 @@ export class AppComponent {
         }
 
         if(event instanceof NavigationStart) {
+          // Start route loading
           this.routeLoading = true;
+        }
+
+        if(event instanceof NavigationCancel || event instanceof NavigationError) {
+          // Check for cancels or errors in route loading
+          this.routeLoading = false;
         }
         
       });

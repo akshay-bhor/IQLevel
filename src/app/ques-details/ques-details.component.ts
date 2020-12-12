@@ -114,19 +114,11 @@ export class QuesDetailsComponent implements OnInit {
   }
 
   setTitle(t) {
-    this.SEO.setTitle(this.stripHtml(t));
+    this.SEO.setTitle(t);
   }
 
   setDesc(d) {
     this.SEO.setDesc(d);
-  }
-
-  stripHtml(t) {
-    t = t.replace(/-/g, ' ');
-    t = t.toLowerCase().replace(/\b[a-z]/g, function(letter) {
-      return letter.toUpperCase();
-    });
-    return t;
   }
 
   reload() {
