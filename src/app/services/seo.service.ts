@@ -9,7 +9,11 @@ export class SeoService {
   constructor(private title: Title, private meta: Meta) { }
 
   public setTitle(title) {
-    this.title.setTitle(this.stripHtml(title).substring(0, 66) + ' - IQLevel');
+    let titleTxt = this.stripHtml(title).substring(0, 66);
+    // remove last word to prevent word break
+    if(titleTxt.length >= 66) 
+      titleTxt = titleTxt.substring(0, titleTxt.lastIndexOf(" "));
+    this.title.setTitle(titleTxt + ' - IQLevel');
   }
 
   public setDesc(desc) {
