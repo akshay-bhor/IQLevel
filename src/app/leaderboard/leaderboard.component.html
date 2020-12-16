@@ -1,0 +1,66 @@
+<!-- Spinner -->
+<div *ngIf="loading && page == 1">
+    <mat-spinner  style="margin:0 auto;" class="mat-display-4"></mat-spinner>
+</div>
+<div class="block tmar" *ngIf="!loading || page != 1">
+    <div class="mat-card">
+        <div class="mat-title">MY STATS</div>
+        <mat-divider></mat-divider>
+        <mat-grid-list cols="3" rowHeight="70px">
+            <div class="grid-3 l">
+                <div class="block text-center small-px bold tmar">Rank</div>
+                <div class="block text-center mat-title bold">{{ rankings.userData.rank }}</div>
+            </div>
+            <div class="grid-3 l">
+                <div class="block text-center small-px bold tmar">Level</div>
+                <div class="block text-center mat-title bold">{{ rankings.userData.level }}</div>
+            </div>
+            <div class="grid-3 l">
+                <div class="block text-center small-px bold tmar">IQ</div>
+                <div class="block text-center mat-title bold tgreen">{{ rankings.userData.iq }}</div>
+            </div>
+        </mat-grid-list>
+    </div>
+    <div class="mat-card" style="margin-top: 25px;">
+        <div class="block">
+            <div class="mat-title">
+                Leaderboard
+                <mat-icon class="tgreen r" style="font-size: 35px;">military_tech</mat-icon>
+            </div>
+        </div>
+        <mat-divider></mat-divider>
+        <div class="block">
+            <div class="block">
+                <div class="grid-2 bold tmar l">Rank</div>
+                <div class="grid-5 bold tmar l">User</div>
+                <div class="grid-3 text-center bold tmar r">IQ</div>
+            </div>
+            
+            <div class="block" *ngFor="let rData of rankings.rankData">
+                <mat-card class="block tmar" [ngClass]="{
+                    'bg-success-sm': rData.rank == rankings.userData.rank
+                }">
+                        <div class="grid-2 mat-title bold l">{{ rData.rank }}</div>  
+                        <div class="grid-5 mat-title bold l">
+                            {{ rData.user }}
+                            <div class="block small-px bold">Level: {{ rData.level }}</div>
+                        </div>  
+                        <div class="grid-3 text-center mat-title bold r" 
+                        [ngClass]="{ 'tgreen': rData.rank != rankings.userData.rank }">{{ rData.iq }}</div>  
+                </mat-card>
+            </div>
+        </div>
+    </div>
+
+    <!-- Load More -->
+    <div class="block">
+        <a mat-raised-button color="primary" class="block btn-c tmar" *ngIf="hasNext" [disabled]="loading" (click)="next()">Load More</a>
+    </div>
+    <!-- float -->
+    <!-- <div class="float-div-bottom">
+        <button mat-mini-fab aria-label="go to top" (click)="stats.scrollTop = 0">
+            <mat-icon>arrow_upward</mat-icon>
+          </button>
+    </div> -->
+</div>
+

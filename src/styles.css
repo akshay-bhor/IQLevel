@@ -1,7 +1,9 @@
 @import '~ngx-toastr/toastr.css';
 
 html, body { height: 100%; }
-body { margin: 0; font-family: 'Open Sans', "Helvetica Neue", sans-serif;
+body { 
+    margin: 0; font-family: 'Open Sans', "Helvetica Neue", sans-serif;
+    word-break: break-all;
 }
 .hidden {
     display: none!important
@@ -416,6 +418,10 @@ th {
     font-size: 80%
 }
 
+.small-px {
+    font-size: 14px
+}
+
 .bold {
     font-weight: 600
 }
@@ -527,7 +533,7 @@ p {
 }
 
 .float-div-bottom {
-    position:fixed;
+    position: fixed;
     right:8px;
     bottom:8px;
     width: auto;

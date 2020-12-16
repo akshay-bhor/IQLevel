@@ -2,7 +2,6 @@ import { NetworkError } from './../error/network-error';
 import { AppError } from './../error/app-error';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { SeoService } from './../services/seo.service';
-import { DataService } from './../services/data.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -19,7 +18,6 @@ export class QuestionsComponent implements OnInit {
   errFlag:boolean;
 
   constructor(
-    private dataService: DataService, 
     private route: ActivatedRoute,
     private router: Router,
     private SEO: SeoService) { 

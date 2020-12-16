@@ -15,7 +15,7 @@ export class QuestionsResolverService implements Resolve<any> {
 
   resolve(route: ActivatedRouteSnapshot, 
     state: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot): Observable<any> | Promise<any> | any { console.log('fired');
+    nextState?: RouterStateSnapshot): Observable<any> | Promise<any> | any { 
       let p = +route.queryParams['p'];
       if(!p) p = 1;
       this.postData.p = p;

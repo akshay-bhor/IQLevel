@@ -26,7 +26,10 @@
         <a mat-list-item routerLink="/register" (click)="sidebarToggle(snav);" class="with-icon"><mat-icon>person_add</mat-icon>&nbsp; Register</a>
         <a mat-list-item routerLink="/questions" (click)="sidebarToggle(snav);" class="with-icon"><mat-icon>help</mat-icon>&nbsp; Questions</a>
       </div>
-      <a mat-list-item *ngIf="authService.isLoggedIn()" (click)="authService.logout(); sidebarToggle(snav);" class="with-icon"><mat-icon>power_settings_new</mat-icon>&nbsp; Logout</a>
+      <div class="block" *ngIf="authService.isLoggedIn()">
+        <a mat-list-item routerLink="/leaderboard" (click)="sidebarToggle(snav);" class="with-icon"><mat-icon>military_tech</mat-icon>&nbsp; Leaderboard</a>
+        <a mat-list-item (click)="authService.logout(); sidebarToggle(snav);" class="with-icon"><mat-icon>power_settings_new</mat-icon>&nbsp; Logout</a>
+      </div>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

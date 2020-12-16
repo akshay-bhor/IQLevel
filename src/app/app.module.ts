@@ -36,6 +36,7 @@ import { QueSkeletonComponent } from './que-skeleton/que-skeleton.component';
 import { IqExitGuardService } from './iq-test/iq-exit-guard.service';
 import { QuesDetailsResolverService } from './ques-details/ques-details-resolver.service';
 import { QuestionsResolverService } from './questions/questions-resolver.service';
+import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 
 @NgModule({
   declarations: [
@@ -54,7 +55,8 @@ import { QuestionsResolverService } from './questions/questions-resolver.service
     ContinueDialogComponent,
     GauthComponent,
     SigninOptionsComponent,
-    QueSkeletonComponent
+    QueSkeletonComponent,
+    LeaderboardComponent
   ],
   imports: [
     BrowserModule,
@@ -80,6 +82,7 @@ import { QuestionsResolverService } from './questions/questions-resolver.service
       { path: 'guest-register', component: GuestRegisterComponent, canActivate: [LoggedInGuardService] },
       { path: 'iq-test', component: IqTestComponent, canActivate: [AuthGuardService], canDeactivate: [IqExitGuardService]  },
       { path: 'result/:test_key', component: ResultComponent, canActivate: [AuthGuardService]  },
+      { path: 'leaderboard', component: LeaderboardComponent, canActivate: [AuthGuardService] },
       { 
         path: 'questions/:qid/:que', 
         component: QuesDetailsComponent, 
