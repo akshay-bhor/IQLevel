@@ -1,5 +1,5 @@
 import { AuthService } from './services/auth.service';
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { SwupdateService } from './services/swupdate.service';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 
@@ -13,6 +13,7 @@ declare let gtag:Function;
 export class AppComponent {
   routeHome: boolean;
   routeLoading: boolean = false;
+  @ViewChild('snav') sideNav: ElementRef;
 
   constructor(public authService: AuthService, private swUpdate: SwupdateService,
     public router:Router) {
@@ -31,32 +32,29 @@ export class AppComponent {
 
           //End route loading
           this.routeLoading = false;
+          //Close Sidebar
+          this.sidebarToggle(this.sideNav);
         }
 
         if(event instanceof NavigationStart) {
           // Start route loading
           this.routeLoading = true;
+          //Close Sidebar
+          this.sidebarToggle(this.sideNav);
         }
 
         if(event instanceof NavigationCancel || event instanceof NavigationError) {
           // Check for cancels or errors in route loading
           this.routeLoading = false;
+          //Close Sidebar
+          this.sidebarToggle(this.sideNav);
         }
         
       });
     }
 
-  sidebarToggle(sideNav, chk = 0) {
-    if(chk == 0) {
-      sideNav.close();
-    }
-    else {
-      //CHECK IF NEED TO CLOSE
-      if(sideNav.open)
-        sideNav.close();
-      else 
-        sideNav.open();
-    }
+  sidebarToggle(sideNav) { 
+    sideNav.close();
   }
 
 }
