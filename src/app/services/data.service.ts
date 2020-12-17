@@ -8,6 +8,7 @@ import { catchError, map } from 'rxjs/operators';
 // import { Http, RequestOptions, Headers } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { throwError } from 'rxjs';
+import { GatewayTimeoutError } from '../error/gateway-timeout-error';
 
 @Injectable({
   providedIn: 'root'
@@ -65,6 +66,9 @@ export class DataService {
       return throwError(new NotFoundError(error));
     if(error.status == 401) {
       return throwError(new UnauthorisedError(error));
+    }
+    if(error.status == 504) {
+      return throwError(new GatewayTimeoutError(error));
     }
     if(error.status == 400)
       return throwError(new BadInput(error));
