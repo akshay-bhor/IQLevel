@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NetworkError } from '../error/network-error';
 import { UnauthorisedError } from '../error/unauth';
@@ -11,7 +11,7 @@ import { SeoService } from '../services/seo.service';
   templateUrl: './leaderboard.component.html',
   styleUrls: ['./leaderboard.component.css']
 })
-export class LeaderboardComponent implements OnInit {
+export class LeaderboardComponent implements OnInit, OnDestroy {
   page: number = 1;
   httpSubscription;
   postData: any = {};

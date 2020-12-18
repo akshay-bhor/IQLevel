@@ -1,0 +1,96 @@
+<!-- Spinner -->
+<div *ngIf="loading">
+    <mat-spinner  style="margin:0 auto;" class="mat-display-4"></mat-spinner>
+</div>
+<div class="block tmar" *ngIf="!loading && !errFlag">
+    <div class="mat-card">
+        <div class="mat-title">STATS</div>
+        <mat-divider></mat-divider>
+        <mat-grid-list cols="3" class="block">
+            <div class="grid-3 l">
+                <div class="block text-center small-px bold tmar">Taken On</div>
+                <div class="block text-center mat-title bold">{{ queData.date }}</div>
+            </div>
+            <div class="grid-3 l">
+                <div class="block text-center small-px bold tmar">IQ</div>
+                <div class="block text-center mat-title bold">{{ queData.score }}</div>
+            </div>
+            <div class="grid-3 l">
+                <div class="block text-center small-px bold tmar">Correct</div>
+                <div class="block text-center mat-title bold tgreen">{{ queData.correct }}/30</div>
+            </div>
+        </mat-grid-list>
+    </div>
+
+    <div class="mat-card" style="margin-top: 15px;">
+        <div class="mat-title">Analysis</div>
+        <mat-divider></mat-divider>
+
+        <div class="block" *ngFor="let queres of queData.data">
+
+            <div id="question" class="tmar">
+                <div *ngIf="queres.questiontype == 1 || queres.questiontype == 3" class="mat-headline" 
+                [innerHTML]="queres.question"></div>
+                <div *ngIf="queres.questiontype == 2 || queres.questiontype == 3" class="mat-headline">
+                    <div *ngFor="let qimg of queres.queimg" class="col-md-6 tmar">
+                        <img class="img-holder" src="https://www.iqlevel.net/uploads/questions/{{ qimg }}" />
+                    </div>
+                </div>
+            </div>
+
+            <div id="options" class="tmar">
+                <div class="block">
+                    <div *ngIf="queres.optiontype == 1">
+                        <div *ngFor="let op of queres.options" class="col-md-6">
+                            <mat-card id="op-{{op.opid}}" class="tmar block pointer" [ngClass]="{
+                                'bg-success-sm': (queres.ans && queres.ans.indexOf(op.opid) != -1),
+                                'bg-danger-sm': (queres.answered && queres.answered.indexOf(op.opid) != -1 && queres.ans && queres.ans.indexOf(op.opid) == -1)
+                            }">
+                                <div *ngIf="op.optype == 1">{{ op.opans }}</div>
+                                <div *ngIf="op.optype == 3">
+                                    <img src="https://www.iqlevel.net/uploads/options/{{ op.opimg }}" class="op-img" />
+                                </div>
+                            </mat-card>
+                        </div>
+                    </div>
+
+                    <div *ngIf="queres.optiontype == 2">
+                        <div *ngIf="queres.ans" class="tmar">
+                            <span class="tgreen bold with-icon" *ngIf="queres.isCorrect == 1">
+                                <mat-icon>done</mat-icon>
+                                &nbsp;Your Answer is Correct! - {{ queres.answered }}
+                            </span>
+                            <span class="bold" *ngIf="queres.isCorrect == 0">
+                                <span class="block tred with-icon"><mat-icon>clear</mat-icon>&nbsp;Your Answer - {{ queres.answered }}</span>
+                                <span class="block tgreen with-icon"><mat-icon>done</mat-icon>&nbsp;Correct Answer - {{ queres.ans }}</span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <mat-accordion *ngIf="queres.exp">
+                <mat-expansion-panel (opened)="panelOpenState=true"
+                       (closed)="panelOpenState=false" style="box-shadow: none;">
+                    <mat-expansion-panel-header style="padding-left: 0;">
+                        <mat-panel-title>
+                            View Explaination
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <div class="block" [innerHTML]="queres.exp"></div>
+                </mat-expansion-panel>
+            </mat-accordion>
+
+            <mat-divider></mat-divider>
+        </div>
+        
+
+        
+        
+    </div>
+</div>
+<div class="block tmar" *ngIf="!loading && errFlag">
+    <mat-card>
+        <a mat-raised-button color="primary" class="btn-c btn-block" (click)="reload()">Reload</a>
+    </mat-card>
+</div>

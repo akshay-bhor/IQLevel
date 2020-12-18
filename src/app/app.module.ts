@@ -37,6 +37,8 @@ import { IqExitGuardService } from './iq-test/iq-exit-guard.service';
 import { QuesDetailsResolverService } from './ques-details/ques-details-resolver.service';
 import { QuestionsResolverService } from './questions/questions-resolver.service';
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
+import { IqTestHistoryComponent } from './iq-test-history/iq-test-history.component';
+import { IqTestAnalysisComponent } from './iq-test-history/iq-test-analysis/iq-test-analysis.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +58,9 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
     GauthComponent,
     SigninOptionsComponent,
     QueSkeletonComponent,
-    LeaderboardComponent
+    LeaderboardComponent,
+    IqTestHistoryComponent,
+    IqTestAnalysisComponent
   ],
   imports: [
     BrowserModule,
@@ -83,6 +87,8 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
       { path: 'iq-test', component: IqTestComponent, canActivate: [AuthGuardService], canDeactivate: [IqExitGuardService]  },
       { path: 'result/:test_key', component: ResultComponent, canActivate: [AuthGuardService]  },
       { path: 'leaderboard', component: LeaderboardComponent, canActivate: [AuthGuardService] },
+      { path: 'iq-tests/analyze/:tkey', component: IqTestAnalysisComponent, canActivate: [AuthGuardService] },
+      { path: 'iq-tests', component: IqTestHistoryComponent, canActivate: [AuthGuardService] },
       { 
         path: 'questions/:qid/:que', 
         component: QuesDetailsComponent, 
@@ -96,7 +102,7 @@ import { LeaderboardComponent } from './leaderboard/leaderboard.component';
         resolve: { ques: QuestionsResolverService },
         runGuardsAndResolvers: 'paramsOrQueryParamsChange'
       },
-      { path:'**', component: HomeComponent }
+      { path:'**', redirectTo: '' }
     ]),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
 
