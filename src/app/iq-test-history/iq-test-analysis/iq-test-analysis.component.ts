@@ -53,6 +53,7 @@ export class IqTestAnalysisComponent implements OnInit, OnDestroy {
         this.queData = res;
       }
       else {
+        this.errFlag = true;
         throw res.err;
       }
     },
@@ -70,10 +71,6 @@ export class IqTestAnalysisComponent implements OnInit, OnDestroy {
     });
   }
 
-  reload() {
-    location.reload();
-  }
-
   ngOnDestroy() {
     this.clearParams();
   }
@@ -81,5 +78,6 @@ export class IqTestAnalysisComponent implements OnInit, OnDestroy {
   clearParams() {
     if(this.httpSubscription)
       this.httpSubscription.unsubscribe();
+    this.errFlag = false;
   }
 }

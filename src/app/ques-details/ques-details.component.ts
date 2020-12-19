@@ -1,6 +1,4 @@
 import { ContinueDialogComponent } from './../continue-dialog/continue-dialog.component';
-import { NetworkError } from './../error/network-error';
-import { AppError } from './../error/app-error';
 import { SeoService } from './../services/seo.service';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { DataService } from './../services/data.service';
@@ -37,7 +35,7 @@ export class QuesDetailsComponent implements OnInit {
       this.qid = params.get('qid');
       this.question = params.get('que');
     });
-    this.setTitle(this.question);
+    // this.setTitle(this.question);
     // this.getQuestion(this.qid);
     
     //GET Data from resolver
@@ -50,6 +48,10 @@ export class QuesDetailsComponent implements OnInit {
 
   loadQueData() {
       if(this.queres.status == 1) {
+        // Set Title
+        this.setTitle(this.queres.title);
+
+        // Set Description
         if(this.queres.desc) this.setDesc(this.queres.desc);
 
         // If question has image set og:image meta tag

@@ -2,6 +2,7 @@ import { AuthService } from './services/auth.service';
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { SwupdateService } from './services/swupdate.service';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
+import { SeoService } from './services/seo.service';
 
 declare let gtag:Function;
 
@@ -15,8 +16,12 @@ export class AppComponent {
   routeLoading: boolean = false;
   @ViewChild('snav') sideNav: ElementRef;
 
-  constructor(public authService: AuthService, private swUpdate: SwupdateService,
-    public router:Router) {
+  constructor(
+    public authService: AuthService, 
+    private swUpdate: SwupdateService,
+    public router:Router,
+    private SEO: SeoService
+    ) {
       this.router.events.subscribe(event => {
         
         if(event instanceof NavigationEnd) {
@@ -29,6 +34,9 @@ export class AppComponent {
           //Check if on homepage
           if(event.urlAfterRedirects == '/') this.routeHome = true;
           else this.routeHome = false;
+
+          //Set canonical url
+          this.SEO.setCanonicalURL();
 
           //End route loading
           this.routeLoading = false;

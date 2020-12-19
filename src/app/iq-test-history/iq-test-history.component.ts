@@ -38,6 +38,7 @@ export class IqTestHistoryComponent implements OnInit, OnDestroy {
         this.tdata = res;
       }
       else {
+        this.errFlag = true;
         throw res.err;
       }
     },
@@ -55,10 +56,6 @@ export class IqTestHistoryComponent implements OnInit, OnDestroy {
     });
   }
 
-  reload() {
-    location.reload();
-  }
-
   ngOnDestroy() {
     this.clearParams();
   }
@@ -66,5 +63,6 @@ export class IqTestHistoryComponent implements OnInit, OnDestroy {
   clearParams() {
     if(this.httpSubscription)
       this.httpSubscription.unsubscribe();
+    this.errFlag = false;
   }
 }

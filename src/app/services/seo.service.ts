@@ -1,4 +1,5 @@
-import { Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Inject, Injectable } from '@angular/core';
 import { Title, Meta } from '@angular/platform-browser' 
 
 @Injectable({
@@ -6,7 +7,11 @@ import { Title, Meta } from '@angular/platform-browser'
 })
 export class SeoService {
 
-  constructor(private title: Title, private meta: Meta) { }
+  constructor(
+    private title: Title, 
+    private meta: Meta,
+    @Inject(DOCUMENT) private doc
+    ) { }
 
   public setTitle(title) {
     let titleTxt = this.stripHtml(title).substring(0, 66);
@@ -22,6 +27,19 @@ export class SeoService {
 
   public setOGImg(imgURL) {
     this.meta.updateTag({ property: 'og:image', content: imgURL });
+  }
+
+  public setCanonicalURL() {
+    let link: HTMLLinkElement;
+    if(!this.doc.querySelector('link[rel="canonical"]')) { 
+      link = this.doc.createElement('link');
+      link.setAttribute('rel', 'canonical');
+      this.doc.head.appendChild(link);
+    }
+    else { 
+      link = this.doc.querySelector('link[rel="canonical"]');
+    }
+    link.setAttribute('href', this.doc.URL);
   }
 
   private stripHtml(t) {

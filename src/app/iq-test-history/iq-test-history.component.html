@@ -38,7 +38,8 @@
     </div>
 </div>
 <div class="block tmar" *ngIf="!loading && errFlag">
-    <mat-card>
-        <a mat-raised-button color="primary" class="btn-c btn-block" (click)="reload()">Reload</a>
+    <mat-card class="block">
+        <a mat-raised-button color="accent" class="grid-4 btn-c l" routerLink="/level">Go Back</a>
+        <a mat-raised-button color="primary" class="grid-4 btn-c r" routerLink="/iq-test">Take a IQ Test</a>
     </mat-card>
 </div>
