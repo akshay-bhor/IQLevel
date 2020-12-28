@@ -16,25 +16,41 @@ export class GauthComponent implements OnInit {
   code:string;
   errMsg:string;
   httpSubscription;
+  dobprompt;
+  needDob: boolean = false;
+  formError;
+  invalidData: boolean = false;
 
   constructor(private router:Router, 
     private postService: DataService, private SEO: SeoService, private route:ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.queryParamMap.subscribe(params => {
+      //Check Whether navigation from oauth or one-tap
+
+      // Oauth
       this.code = params.get('code');
+      
+      // One Tap
+      this.dobprompt = params.get('birthday');
     });
     // Set Title
     this.SEO.setTitle('Sign in with Google');
 
     // Check if code is received
-    if(this.validCode(this.code)) {
+    if(this.code && this.validCode(this.code)) {
       // Sign in
       this.signIn(this.code);
     }
     else {
-      this.invalidSignin = true;
-      this.errMsg = 'Error occurred retrieving credentials!';
+      // Check if prompt for birthday
+      if(this.dobprompt == 'true') {
+        this.needDob = true;
+      }
+      else {
+        this.invalidSignin = true;
+        this.errMsg = 'Error occurred retrieving credentials!';
+      }
     }
     
   }
@@ -59,6 +75,10 @@ export class GauthComponent implements OnInit {
         //Navigate to app
         this.router.navigate(['/level']);
       }
+      else if(res.status == 2) {
+        // Birthday fail
+        this.needDob = true;
+      }
       else {
         this.errMsg = res.err;
         this.invalidSignin = true;
@@ -72,6 +92,40 @@ export class GauthComponent implements OnInit {
       else
         throw 'Unexpected Error Occured!';
     });
+  }
+
+  postDob(data) {
+    this.loading = true;
+    this.clearParams();
+
+    let url = 'https://www.iqlevel.net/api/social-signin/google-sign-in';
+    this.httpSubscription = this.postService.post(url, data).subscribe(res => {
+      this.loading = false;
+      if(res.status == 1) {
+        this.invalidSignin = false;
+        localStorage.setItem('token', res.token);
+        if(res.level)
+          localStorage.setItem('level', res.level);
+        else
+          localStorage.setItem('level', '1');
+
+        //Navigate to app
+        this.router.navigate(['/level']);
+      }
+      else {
+        this.formError = res.err;
+        this.invalidData = true;
+      }
+    },
+    (error:AppError) => {
+      this.invalidData = true;
+      this.loading = false;
+      if(error instanceof NetworkError)
+        throw 'No Internet!';
+      else
+        throw 'Unexpected Error Occured!';
+    });
+
   }
 
   validCode(code) {

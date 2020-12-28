@@ -39,6 +39,7 @@ import { QuestionsResolverService } from './questions/questions-resolver.service
 import { LeaderboardComponent } from './leaderboard/leaderboard.component';
 import { IqTestHistoryComponent } from './iq-test-history/iq-test-history.component';
 import { IqTestAnalysisComponent } from './iq-test-history/iq-test-analysis/iq-test-analysis.component';
+import { GoogleOneTapComponent } from './google-one-tap/google-one-tap.component';
 
 @NgModule({
   declarations: [
@@ -60,7 +61,8 @@ import { IqTestAnalysisComponent } from './iq-test-history/iq-test-analysis/iq-t
     QueSkeletonComponent,
     LeaderboardComponent,
     IqTestHistoryComponent,
-    IqTestAnalysisComponent
+    IqTestAnalysisComponent,
+    GoogleOneTapComponent
   ],
   imports: [
     BrowserModule,

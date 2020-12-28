@@ -29,7 +29,9 @@
               "src/styles.css",
               "src/theme.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/custom.js"
+            ]
           },
           "configurations": {
             "production": {

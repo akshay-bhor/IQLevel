@@ -1,3 +1,5 @@
+<!-- Google One Tap Sign IN -->
+<app-google-one-tap *ngIf="!authService.isLoggedIn()"></app-google-one-tap>
 
 <mat-toolbar color="primary" role="heading">
   <mat-progress-bar mode="indeterminate" *ngIf="routeLoading"></mat-progress-bar>

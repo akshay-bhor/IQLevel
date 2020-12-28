@@ -4,6 +4,13 @@
   "theme_color": "#1976d2",
   "background_color": "#fafafa",
   "display": "standalone",
+  "prefer_related_applications": true,
+  "related_applications": [
+    {
+      "platform": "play",
+      "id": "net.iqlevel"
+    }
+  ],
   "start_url": "/",
   "icons": [
     {
