@@ -1,5 +1,7 @@
 <!-- Google One Tap Sign IN -->
-<app-google-one-tap *ngIf="!authService.isLoggedIn()"></app-google-one-tap>
+<span *ngIf="!authService.isLoggedIn() && !routeGauth">
+  <app-google-one-tap></app-google-one-tap>
+</span>
 
 <mat-toolbar color="primary" role="heading">
   <mat-progress-bar mode="indeterminate" *ngIf="routeLoading"></mat-progress-bar>
@@ -31,7 +33,8 @@
       <div class="block" *ngIf="authService.isLoggedIn()">
         <a mat-list-item routerLink="/iq-tests" class="with-icon"><mat-icon>history</mat-icon>&nbsp; History</a>
         <a mat-list-item routerLink="/leaderboard" class="with-icon"><mat-icon>military_tech</mat-icon>&nbsp; Leaderboard</a>
-        <a mat-list-item (click)="authService.logout();" class="with-icon"><mat-icon>power_settings_new</mat-icon>&nbsp; Logout</a>
+        <!-- g_id_signout to sign out google and prohibit auto seletion -->
+        <a mat-list-item (click)="authService.logout();" class="with-icon g_id_signout"><mat-icon>power_settings_new</mat-icon>&nbsp; Logout</a>
       </div>
     </mat-nav-list>
   </mat-sidenav>

@@ -13,6 +13,7 @@ declare let gtag:Function;
 })
 export class AppComponent {
   routeHome: boolean;
+  routeGauth: boolean;
   routeLoading: boolean = false;
   @ViewChild('snav') sideNav: ElementRef;
 
@@ -35,6 +36,10 @@ export class AppComponent {
           if(event.urlAfterRedirects == '/') this.routeHome = true;
           else this.routeHome = false;
 
+          // Check if on google auth page
+          if(event.urlAfterRedirects == '/gauth') this.routeGauth = true;
+          else this.routeGauth = false;
+
           //Set canonical url
           this.SEO.setCanonicalURL();
 
@@ -42,6 +47,8 @@ export class AppComponent {
           this.routeLoading = false;
           //Close Sidebar
           this.sidebarToggle(this.sideNav);
+          // Check if one tap should be closed
+          this.rmOneTap();
         }
 
         if(event instanceof NavigationStart) {
@@ -63,6 +70,18 @@ export class AppComponent {
 
   sidebarToggle(sideNav) { 
     sideNav.close();
+  }
+
+  rmOneTap() {
+    if(this.authService.isLoggedIn()) {
+      // Remove One-Tap
+      let gPrompt = document.getElementById("credential_picker_container");
+      let gPromptMobile = document.getElementById("credential_picker_iframe");
+      if(gPrompt)
+        gPrompt.remove();
+      if(gPromptMobile)
+        gPromptMobile.remove();
+    }
   }
 
 }

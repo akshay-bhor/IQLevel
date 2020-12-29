@@ -25,7 +25,6 @@ function handleOneTap(code) {
             }
         }
     };
-    console.log(code);
     var data = JSON.stringify({"id_token": code.credential});
     xhr.send(data);
 }

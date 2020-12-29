@@ -22,6 +22,10 @@ export class OauthProviderService {
 
     return encodeURI(scopes.join(' '));
   }
+
+  get loginUri() {
+    return encodeURI('https://www.iqlevel.net/login');
+  }
 }
 
 
