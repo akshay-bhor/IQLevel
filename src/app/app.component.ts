@@ -1,5 +1,5 @@
 import { AuthService } from './services/auth.service';
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { SwupdateService } from './services/swupdate.service';
 import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { SeoService } from './services/seo.service';
@@ -22,7 +22,7 @@ export class AppComponent {
     private swUpdate: SwupdateService,
     public router:Router,
     private SEO: SeoService
-    ) {
+    ) { 
       this.router.events.subscribe(event => {
         
         if(event instanceof NavigationEnd) {
@@ -37,9 +37,9 @@ export class AppComponent {
           else this.routeHome = false;
 
           // Check if on google auth page
-          if(event.urlAfterRedirects == '/gauth') this.routeGauth = true;
+          if(event.urlAfterRedirects.split('?')[0] == '/gauth') this.routeGauth = true;
           else this.routeGauth = false;
-
+          console.log(event.urlAfterRedirects.split('?')[0]);
           //Set canonical url
           this.SEO.setCanonicalURL();
 
