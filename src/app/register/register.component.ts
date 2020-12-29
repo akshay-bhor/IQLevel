@@ -1,7 +1,4 @@
-import { NetworkError } from './../error/network-error';
 import { DataService } from './../services/data.service';
-import { BadInput } from './../error/bad-input';
-import { AppError } from './../error/app-error';
 import { AgeValidator } from './age.validators';
 import { UnameValidator } from './uname.validators';
 import { Router } from '@angular/router';
@@ -64,15 +61,15 @@ export class RegisterComponent implements OnInit {
       }
       this.loading = false;
     },
-    (error: AppError) => {
+    (error) => {
       this.loading = false;
-      if(error instanceof BadInput) {
-        throw 'Bad Input!';
-      }
-      else if(error instanceof NetworkError) {
-        throw 'No Internet!';
-      }
-      else throw 'Unexpected Error Occured!';
+      // if(error instanceof BadInput) {
+      //   throw 'Bad Input!';
+      // }
+      // else if(error instanceof NetworkError) {
+      //   throw 'No Internet!';
+      // }
+      throw error;
     });
   }
 

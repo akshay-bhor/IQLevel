@@ -1,5 +1,3 @@
-import { NetworkError } from './../error/network-error';
-import { AppError } from './../error/app-error';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { SeoService } from './../services/seo.service';
 import { Component, OnInit } from '@angular/core';

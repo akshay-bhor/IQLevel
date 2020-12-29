@@ -10,8 +10,7 @@ import { SeoService } from './../services/seo.service';
 })
 export class ContinueComponent implements OnInit {
 
-  constructor(private router: Router, 
-    private SEO: SeoService) { }
+  constructor(private SEO: SeoService) { }
 
   ngOnInit(): void {
     this.SEO.setTitle('Continue As');

@@ -1,9 +1,5 @@
-import { UnauthorisedError } from './../error/unauth';
-import { BadInput } from './../error/bad-input';
 import { SeoService } from './../services/seo.service';
 import { ToastService } from './../services/toast.service';
-import { NetworkError } from './../error/network-error';
-import { AppError } from './../error/app-error';
 import { DataService } from './../services/data.service';
 import { Router } from '@angular/router';
 import { AuthService } from './../services/auth.service';
@@ -67,15 +63,15 @@ export class IqTestComponent implements OnInit, CanComponentDeactivate {
         throw res.err;
       }
     },
-    (error: AppError) => {
+    (error) => {
       this.errFlag = true;
       this.loading = false;
-      if(error instanceof NetworkError)
-        throw 'No Internet!';
-      else if(error instanceof UnauthorisedError)
-        this.authService.logout();
-      else
-        throw 'Unexpected Error Occured!';
+      // if(error instanceof NetworkError)
+      //   throw 'No Internet!';
+      // else if(error instanceof UnauthorisedError)
+      //   this.authService.logout();
+      // else
+        throw error;
     });
   }
 
@@ -115,15 +111,15 @@ export class IqTestComponent implements OnInit, CanComponentDeactivate {
         throw res.err;
       }
     },
-    (error: AppError) => {
+    (error) => {
       this.sloading = false;
-      if(error instanceof BadInput)
-        throw 'Bad Input';
-      if(error instanceof NetworkError)
-        throw 'No Internet!';
-      if(error instanceof UnauthorisedError)
-        this.authService.logout();
-      throw 'Unexpected Error Occured!';
+      // if(error instanceof BadInput)
+      //   throw 'Bad Input';
+      // if(error instanceof NetworkError)
+      //   throw 'No Internet!';
+      // if(error instanceof UnauthorisedError)
+      //   this.authService.logout();
+      throw error;
     });
   }
 
@@ -160,7 +156,7 @@ export class IqTestComponent implements OnInit, CanComponentDeactivate {
            this.router.navigate(['result']);
         }
         if(timer == 10) {
-          this.toast.warningMsg('Less Than 10 Sec Left!', 'Warning');
+          this.toast.show('Less Than 10 Sec Left!', 'error');
         }
         --this.duration;
   }

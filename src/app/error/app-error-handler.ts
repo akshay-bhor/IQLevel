@@ -1,5 +1,5 @@
-import { ErrorHandler, Injectable, Injector, Inject } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { ErrorHandler, Injectable } from '@angular/core';
+import { ToastService } from '../services/toast.service';
 
 /**
  * Handle any errors thrown by Angular application
@@ -7,25 +7,15 @@ import { ToastrService } from 'ngx-toastr';
 @Injectable()
 export class AppErrorHandler extends ErrorHandler {
 
-    constructor(
-        @Inject(Injector) private readonly injector: Injector
-    ) {
+    constructor(private toast:ToastService) {
         super();
     }
 
     handleError(error) {
-        
-        this.toastrService.error(error, 'Error!', { onActivateTick: true })
+
+        this.toast.show(error, 'error');
         
         super.handleError(error);
-    }
-
-    /**
-     * Need to get ToastrService from injector rather than constructor injection to avoid cyclic dependency error
-     * @returns {} 
-     */
-    private get toastrService(): ToastrService {
-        return this.injector.get(ToastrService);
     }
 
 }

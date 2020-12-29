@@ -11,7 +11,6 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ToastrModule } from 'ngx-toastr';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -72,11 +71,6 @@ import { GoogleOneTapComponent } from './google-one-tap/google-one-tap.component
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MaterialModule,
-    ToastrModule.forRoot({
-      positionClass: 'toast-bottom-center',
-      closeButton: true,
-      preventDuplicates: true
-    }),
     RouterModule.forRoot([
       { path: '', component: HomeComponent, canActivate: [LoggedInGuardService] },
       { path: 'login', component: LoginComponent, canActivate: [LoggedInGuardService] },

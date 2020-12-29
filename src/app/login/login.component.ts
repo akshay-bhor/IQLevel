@@ -1,10 +1,6 @@
-import { NetworkError } from './../error/network-error';
 import { Router } from '@angular/router';
-import { NotFoundError } from './../error/not-found-error';
-import { BadInput } from './../error/bad-input';
 import { AuthService } from './../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { AppError } from '../error/app-error';
 import { SeoService } from './../services/seo.service';
 
 @Component({
@@ -36,15 +32,9 @@ export class LoginComponent implements OnInit {
         this.loading = false;
       }
     },
-    (error: AppError) => {
+    (error) => {
       this.loading = false;
-      if(error instanceof BadInput) {
-          throw 'Bad Input!';
-      }
-      if(error instanceof NetworkError) {
-        throw 'No Internet!';
-    }
-      else throw 'Unexpected Error Occurred!';
+      throw error;
     });
   }
 }

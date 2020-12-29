@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { JwtHelper, tokenNotExpired } from 'angular2-jwt';
+import { throwError } from 'rxjs';
 
 
 @Injectable({
@@ -21,7 +22,9 @@ export class AuthService {
           return true;
         }
         return false;
-      }));
+      }),
+      catchError(this.handleError)
+      );
   }
 
   logout() {
@@ -76,5 +79,21 @@ export class AuthService {
 
   get getUserAge() {
     return this.getUserData.age;
+  }
+
+  private handleError(error: Response) { 
+    let errMsg = "Unexpected Error Occured!";
+
+    switch(+error.status) {
+      case 0:
+        errMsg = "No Internet!"; break;
+      case 404:
+        errMsg = "URL Not Found!"; break;
+      case 504:
+        errMsg = "Oops! Request Timed Out."; break;
+      case 400:
+        errMsg = "Bad Input!"; break;
+    }
+    return throwError(errMsg);
   }
 }

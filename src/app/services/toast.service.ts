@@ -1,26 +1,31 @@
-import { Injectable } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
+import { Injectable, NgZone } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ToastService {
 
-  constructor(private toastr:ToastrService) { }
+  constructor(private snackBar:MatSnackBar, private zone: NgZone) { }
 
-  successMsg(msg, title) {
-    this.toastr.success(msg, title);
-  }
-
-  errorMsg(msg, title) {
-    this.toastr.error(msg, title);
-  }
-
-  infoMsg(msg, title) {
-    this.toastr.info(msg, title);
-  }
-
-  warningMsg(msg, title) {
-    this.toastr.warning(msg, title);
+  /**
+   * Error Handler runs outside of angular zone
+   * so to correct behaviour we ran it using Ngzone
+   */
+  show(msg, type) {
+    let snackClass = "bg-success-sm";
+    if(type = 'error') snackClass = "bg-danger-sm";
+    this.zone.run(() => {
+      const snack = this.snackBar.open(msg, 'Close', {
+        duration: 3000,
+        verticalPosition: 'bottom',
+        horizontalPosition: 'center',
+        panelClass: [snackClass]
+      });
+  
+      snack.onAction().subscribe(() => {
+        snack.dismiss();
+      });
+    });
   }
 }

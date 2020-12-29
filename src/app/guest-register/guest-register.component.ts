@@ -1,6 +1,3 @@
-import { BadInput } from './../error/bad-input';
-import { NetworkError } from './../error/network-error';
-import { AppError } from './../error/app-error';
 import { AgeValidator } from './../register/age.validators';
 import { UnameValidator } from './../register/uname.validators';
 import { DataService } from './../services/data.service';
@@ -55,15 +52,15 @@ export class GuestRegisterComponent implements OnInit {
       }
       this.loading = false;
     },
-    (error: AppError) => {
+    (error) => {
       this.loading = false;
-      if(error instanceof BadInput) {
-        //TOAST HERE
-      }
-      else if(error instanceof NetworkError) {
-        alert('No Internet!');
-      }
-      else throw error;
+      // if(error instanceof BadInput) {
+      //   //TOAST HERE
+      // }
+      // else if(error instanceof NetworkError) {
+      //   alert('No Internet!');
+      // }
+      throw error;
     });
   }
 

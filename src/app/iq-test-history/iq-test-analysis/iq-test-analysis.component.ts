@@ -1,9 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GatewayTimeoutError } from 'src/app/error/gateway-timeout-error';
-import { NetworkError } from 'src/app/error/network-error';
-import { UnauthorisedError } from 'src/app/error/unauth';
-import { AuthService } from 'src/app/services/auth.service';
 import { DataService } from 'src/app/services/data.service';
 import { SeoService } from 'src/app/services/seo.service';
 
@@ -24,7 +20,6 @@ export class IqTestAnalysisComponent implements OnInit, OnDestroy {
   constructor(
     private SEO: SeoService,
     private dataService: DataService,
-    private authService: AuthService,
     private route: ActivatedRoute
   ) { }
 
@@ -60,14 +55,14 @@ export class IqTestAnalysisComponent implements OnInit, OnDestroy {
     (error: Error) => {
       this.errFlag = true;
       this.loading = false;
-      if(error instanceof NetworkError)
-        throw 'No Internet!';
-      else if(error instanceof UnauthorisedError)
-        this.authService.logout();
-      else if(error instanceof GatewayTimeoutError)
-        throw 'Request Timed Out!';
-      else
-        throw 'Unexpected Error Occured!';
+      // if(error instanceof NetworkError)
+      //   throw 'No Internet!';
+      // else if(error instanceof UnauthorisedError)
+      //   this.authService.logout();
+      // else if(error instanceof GatewayTimeoutError)
+      //   throw 'Request Timed Out!';
+      // else
+        throw error;
     });
   }
 

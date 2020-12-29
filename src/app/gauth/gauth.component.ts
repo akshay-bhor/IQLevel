@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from './../services/data.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { NetworkError } from './../error/network-error';
-import { AppError } from './../error/app-error';
 import { SeoService } from './../services/seo.service';
 
 @Component({
@@ -50,6 +48,10 @@ export class GauthComponent implements OnInit {
       else {
         this.invalidSignin = true;
         this.errMsg = 'Error occurred retrieving credentials!';
+
+        setTimeout(() => {
+          this.router.navigate['/continue'];
+        }, 2000)
       }
     }
     
@@ -84,13 +86,14 @@ export class GauthComponent implements OnInit {
         this.invalidSignin = true;
       }
     },
-    (error:AppError) => {
+    (error) => {
       this.invalidSignin = true;
       this.loading = false;
-      if(error instanceof NetworkError)
-        throw 'No Internet!';
-      else
-        throw 'Unexpected Error Occured!';
+      // if(error instanceof NetworkError)
+      //   throw 'No Internet!';
+      // else
+      //   throw 'Unexpected Error Occured!';
+      throw error;
     });
   }
 
@@ -117,13 +120,14 @@ export class GauthComponent implements OnInit {
         this.invalidData = true;
       }
     },
-    (error:AppError) => {
+    (error) => {
       this.invalidData = true;
       this.loading = false;
-      if(error instanceof NetworkError)
-        throw 'No Internet!';
-      else
-        throw 'Unexpected Error Occured!';
+      // if(error instanceof NetworkError)
+      //   throw 'No Internet!';
+      // else
+      //   throw 'Unexpected Error Occured!';
+      throw error;
     });
 
   }

@@ -1,7 +1,4 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NetworkError } from '../error/network-error';
-import { UnauthorisedError } from '../error/unauth';
 import { AuthService } from '../services/auth.service';
 import { DataService } from '../services/data.service';
 import { SeoService } from '../services/seo.service';
@@ -56,15 +53,15 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
         throw res.err;
       }
     },
-    (error: Error) => {
+    (error) => {
       this.errFlag = true;
       this.loading = false;
-      if(error instanceof NetworkError)
-        throw 'No Internet!';
-      else if(error instanceof UnauthorisedError)
-        this.authService.logout();
-      else
-        throw 'Unexpected Error Occured!';
+      // if(error instanceof NetworkError)
+      //   throw 'No Internet!';
+      // else if(error instanceof UnauthorisedError)
+      //   this.authService.logout();
+      // else
+        throw error;
     });
   }
 

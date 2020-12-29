@@ -698,6 +698,9 @@ p {
     background: #00c853!important;
     color:#fff!important;
 }
+.bg-success-sm .mat-button-wrapper {
+    color:#fff!important;
+}
 .bg-danger {
     background: #d32f2f!important;
     border:2px solid #d32f2f!important;
@@ -706,6 +709,9 @@ p {
 }
 .bg-danger-sm {
     background: #d32f2f!important;
+    color:#fff!important;
+}
+.bg-danger-sm .mat-button-wrapper {
     color:#fff!important;
 }
 .pagination {

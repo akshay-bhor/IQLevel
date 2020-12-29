@@ -1,6 +1,3 @@
-import { UnauthorisedError } from './../error/unauth';
-import { NetworkError } from './../error/network-error';
-import { AppError } from './../error/app-error';
 import { SeoService } from './../services/seo.service';
 import { DataService } from './../services/data.service';
 import { ActivatedRoute } from '@angular/router';
@@ -55,15 +52,15 @@ export class ResultComponent implements OnInit {
         throw res.err;
       }
     },
-    (error: AppError) => {
+    (error) => {
       this.loading = false;
       this.err = true;
-      if(error instanceof NetworkError)
-        throw 'No Internet!';
-      else if(error instanceof UnauthorisedError)
-        this.authService.logout();
-      else
-        throw 'Unexpected Error Occured!';
+      // if(error instanceof NetworkError)
+      //   throw 'No Internet!';
+      // else if(error instanceof UnauthorisedError)
+      //   this.authService.logout();
+      // else
+        throw error;
     });
   }
 
