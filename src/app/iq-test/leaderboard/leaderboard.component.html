@@ -2,7 +2,7 @@
 <div *ngIf="loading && page == 1">
     <mat-spinner  style="margin:0 auto;" class="mat-display-4"></mat-spinner>
 </div>
-<div class="block tmar" *ngIf="!loading || page != 1" style="white-space: nowrap;">
+<div class="block tmar" *ngIf="(!loading && !errFlag) || page != 1" style="white-space: nowrap;">
     <div class="mat-card">
         <div class="mat-title">MY STATS</div>
         <mat-divider></mat-divider>
@@ -62,5 +62,8 @@
             <mat-icon>arrow_upward</mat-icon>
           </button>
     </div> -->
+</div>
+<div class="block mat-card" *ngIf="errFlag && page == 1">
+    <a mat-raised-button color="primary" class="block btn-c tmar" (click)="getRankData()">Retry</a>
 </div>
 

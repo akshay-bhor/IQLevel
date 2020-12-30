@@ -1,8 +1,8 @@
 <mat-card-title>How Would You Like to Continue?</mat-card-title>
         <mat-card-content>
-            <a routerLink="/login" class="block btn-c tmar" mat-raised-button color="primary">Login using Email and Password</a>
-            <a routerLink="/register" class="block btn-c tmar" mat-raised-button color="accent">Sign up using Email and Password</a>
-            <a routerLink="/guest-register" class="block" mat-raised-button color="link">Continue as Guest</a>
+            <a [routerLink]="'/login'" class="block btn-c tmar" mat-raised-button color="primary">Login using Email and Password</a>
+            <a [routerLink]="'/register'" class="block btn-c tmar" mat-raised-button color="accent">Sign up using Email and Password</a>
+            <a [routerLink]="'/guest-register'" class="block" mat-raised-button color="link">Continue as Guest</a>
         </mat-card-content>
         
         <mat-card-subtitle class="text-center">

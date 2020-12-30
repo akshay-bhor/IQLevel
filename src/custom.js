@@ -28,3 +28,7 @@ function handleOneTap(code) {
     var data = JSON.stringify({"id_token": code.credential});
     xhr.send(data);
 }
+const gSignOut = document.getElementById("g_id_signout");
+gSignOut.onclick = () => {
+      google.accounts.id.disableAutoSelect();
+    }

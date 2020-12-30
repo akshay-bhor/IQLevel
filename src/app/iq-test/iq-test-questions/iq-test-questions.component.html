@@ -1,0 +1,82 @@
+
+    <mat-card class="block">
+        <div *ngIf="loading" class="skeleton-container">
+            <!-- SKELETON STRUCTURE -->
+            <app-que-skeleton></app-que-skeleton>
+            <!-- END OF SKELETON -->
+        </div>
+        <div *ngIf="!loading && !errFlag" class="block">
+
+            <h2 class="mat-title">Question {{current + 1}}</h2>
+
+            <div id="question" class="tmar">
+                <div *ngIf="queres.questions[current].questiontype == 1 || queres.questions[current].questiontype == 3" class="mat-headline" 
+                [innerHTML]="queres.questions[current].question"></div>
+                <div *ngIf="queres.questions[current].questiontype == 2 || queres.questions[current].questiontype == 3" class="mat-headline">
+                    <div *ngFor="let qimg of queres.questions[current].queimg" class="col-md-6 tmar">
+                        <img class="img-holder" src="https://www.iqlevel.net/uploads/questions/{{ qimg }}" />
+                    </div>
+                </div>
+            </div>
+
+            <div id="options" class="tmar">
+                <div class="block">
+                    <div *ngIf="queres.questions[current].optiontype == 1">
+                        <div *ngFor="let op of queres.questions[current].options" class="col-md-6">
+                            <mat-card id="op-{{op.opid}}" class="tmar block pointer" [ngClass]="{
+                                'bg-primary-sm': (ans_arr && ans_arr.indexOf(op.opid) != -1)
+                            }" (click)="selAns(op.opid)">
+                                <div *ngIf="op.optype == 1">{{ op.opans }}</div>
+                                <div *ngIf="op.optype == 3">
+                                    <img src="https://www.iqlevel.net/uploads/options/{{ op.opimg }}" class="op-img" />
+                                </div>
+                            </mat-card>
+                        </div>
+                    </div>
+
+                    <div *ngIf="queres.questions[current].optiontype == 2">
+                        <mat-form-field>
+                            <input matInput type="number" id="qtans" [(ngModel)]="qtans" name="qtans" 
+                            autocomplete="off" step="0.1"
+                            placeholder="Type Your Answer Here..." required />
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+
+            <div id="btns" class="block">
+                <div class="block">
+                    <button mat-raised-button color="primary" class="btn-c l" type="submit" [disabled]="timeout || sloading" (click)="submitAns()">Submit</button>
+                    <button mat-raised-button color="primary" class="btn-c r" type="submit" (click)="next()">Next</button>
+                </div>
+                <div class="block tgreen bold with-icon tmar" *ngIf="answered.indexOf(current) != -1"><mat-icon>done</mat-icon>Submitted</div>
+
+                <div class="block" *ngIf="answered.length == qno"><a [routerLink]="['result', test_key]" mat-raised-button color="primary" class="block btn-c tmar">Calculate Your IQ</a></div>
+
+                <div class="tred with-icon" *ngIf="timeout">
+                    <mat-icon>error</mat-icon>
+                    &nbsp;Sorry! You Ran Out of Time!
+                </div>
+            </div>
+
+            <!-- PAGINATION -->
+            <div class="pagination tmar-60 x-scroll-mobile">
+                <a *ngFor="let q of queres.questions;index as i" (click)="selQue(i)" class="iblock pointer"
+                 [ngClass]="{ 'active': i == current, 'bg-success-sm': answered.indexOf(i) != -1 }">{{i + 1}}
+                </a>
+            </div>
+
+        </div>
+        <!--ERROR-->
+        <div *ngIf="errFlag">
+            <a mat-raised-button class="btn-c grid-4 tmar l" color="primary" routerLink="/level">Go Back</a>
+            <a mat-raised-button class="btn-c grid-4 tmar r" color="warn" (click)="reload();">Refresh</a>
+        </div>
+    </mat-card>
+    <!-- STICKY FOR TIMER -->
+    <mat-chip-list class="float-div-top">
+        <mat-chip color="accent" *ngIf="!loading && !errFlag && queres.time" id="cTimer" selected></mat-chip>
+    </mat-chip-list>
+
+
+

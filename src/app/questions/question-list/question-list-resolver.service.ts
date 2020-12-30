@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { AuthService } from '../services/auth.service';
-import { DataService } from '../services/data.service';
+import { AuthService } from '../../services/auth.service';
+import { DataService } from '../../services/data.service';
 import 'rxjs/add/operator/catch';
 
 @Injectable({
   providedIn: 'root'
 })
-export class QuestionsResolverService implements Resolve<any> {
+export class QuestionListResolverService implements Resolve<any> {
   url;
   postData:any = {}
   constructor(private dataService:DataService, private authService: AuthService) { 

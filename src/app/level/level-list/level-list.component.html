@@ -1,0 +1,27 @@
+
+    
+    <h2 class="h2">Welcome, {{ authService.getUserData.name ? authService.getUserData.name : authService.getUserData.username }}</h2>
+    
+    <mat-tab-group mat-align-tabs="center">
+        <mat-tab label="Game">
+            <mat-card *ngFor="let level of levels; index as i" 
+            class="tpad block tmar pointer"
+            [ngClass]="{
+                'border-success': uLevel > (i + 1),
+                'border-primary': cLevel == (i + 1),
+                'disabled': uLevel < (i + 1)
+            }"
+            (click)="routeTo(i + 1)">
+                <span class="l">Level {{ (i + 1) }}</span>
+            </mat-card>
+        </mat-tab>
+        <mat-tab label="IQ Test">
+            <mat-card>
+                <a routerLink="/iq-test" class="block text-center">
+                    <mat-icon class="mat-icon-ebig">play_circle_filled</mat-icon>
+                    <span class="ebig block tmar">Start</span>
+                </a>
+            </mat-card>
+        </mat-tab>
+    </mat-tab-group>
+    

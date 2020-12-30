@@ -1,7 +1,7 @@
-import { SeoService } from './../services/seo.service';
-import { DataService } from './../services/data.service';
+import { SeoService } from '../../services/seo.service';
+import { DataService } from '../../services/data.service';
 import { ActivatedRoute } from '@angular/router';
-import { AuthService } from './../services/auth.service';
+import { AuthService } from '../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({

@@ -39,7 +39,7 @@ export class AppComponent {
           // Check if on google auth page
           if(event.urlAfterRedirects.split('?')[0] == '/gauth') this.routeGauth = true;
           else this.routeGauth = false;
-          console.log(event.urlAfterRedirects.split('?')[0]);
+         
           //Set canonical url
           this.SEO.setCanonicalURL();
 

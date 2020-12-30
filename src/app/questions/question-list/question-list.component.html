@@ -1,0 +1,36 @@
+
+    <h2 class="mat-headline bold">Questions</h2>
+    <mat-divider></mat-divider>
+    <!-- <mat-card *ngIf="loading" class="block tmar">
+        <mat-spinner  style="margin:0 auto;" class="mat-display-4"></mat-spinner>
+    </mat-card> -->
+    <div *ngIf="!loading && !errFlag">
+        <a class="block tmar mat-card" *ngFor="let q of que.questions" routerLink="./{{ q.qid }}/{{ q.slug }}"> 
+            <mat-card-title class="bold" *ngIf="q.questiontype == 1 || q.questiontype == 3" 
+            [innerHTML]="q.question">
+            </mat-card-title>
+            <div *ngIf="q.questiontype == 2 || q.questiontype == 3" class="block">
+                <div *ngFor="let qimg of q.queimg" class="col-md-6 tmar">
+                    <img mat-card-md-img class="img-holder" src="https://www.iqlevel.net/uploads/questions/{{ qimg }}" />
+                </div>
+            </div>
+            <div class="block">
+                <mat-chip-list>
+                    <mat-chip color="accent" selected>{{ q.cat }}</mat-chip>
+                </mat-chip-list>
+            </div>
+        </a>
+        <!--NAVIGATION-->
+        <div id="pagination" class="block tmar">
+            <a class="l" *ngIf="page > 1" routerLink="/questions" [queryParams]="{p: (page - 1)}">
+                <mat-icon class="mat-icon-ebig pointer">navigate_before</mat-icon>
+            </a>
+            <a class="r" *ngIf="hasNext" routerLink="/questions" [queryParams]="{p: (page + 1)}">
+                <mat-icon class="mat-icon-ebig pointer">navigate_next</mat-icon>
+            </a>
+        </div>
+    </div>
+    <!--ERROR-->
+    <mat-card *ngIf="errFlag && !loading">
+        <a (click)="reload()" mat-raised-button color="primary" class="block btn-c">Reload</a>
+    </mat-card>

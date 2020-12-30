@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Resolve, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { DataService } from '../services/data.service';
-import { AuthService } from '../services/auth.service';
+import { DataService } from '../../services/data.service';
+import { AuthService } from '../../services/auth.service';
 import 'rxjs/add/operator/catch';
 
 @Injectable({

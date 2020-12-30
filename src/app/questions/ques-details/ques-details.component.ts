@@ -1,7 +1,7 @@
-import { ContinueDialogComponent } from './../continue-dialog/continue-dialog.component';
-import { SeoService } from './../services/seo.service';
+import { ContinueDialogComponent } from '../../continue-dialog/continue-dialog.component';
+import { SeoService } from '../../services/seo.service';
 import { ActivatedRoute, Data, Router } from '@angular/router';
-import { DataService } from './../services/data.service';
+import { DataService } from '../../services/data.service';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 

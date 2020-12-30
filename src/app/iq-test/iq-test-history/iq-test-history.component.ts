@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DataService } from '../services/data.service';
-import { SeoService } from '../services/seo.service';
+import { DataService } from '../../services/data.service';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-iq-test-history',

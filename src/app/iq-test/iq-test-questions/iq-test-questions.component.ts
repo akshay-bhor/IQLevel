@@ -1,21 +1,23 @@
-import { SeoService } from './../services/seo.service';
-import { ToastService } from './../services/toast.service';
-import { DataService } from './../services/data.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from './../services/auth.service';
+import { SeoService } from './../../services/seo.service';
+import { ToastService } from './../../services/toast.service';
+import { DataService } from './../../services/data.service';
+import { Router } from '@angular/router';
+import { AuthService } from './../../services/auth.service';
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { CanComponentDeactivate } from './iq-exit-guard.service';
 
 @Component({
-  selector: 'question',
-  templateUrl: './question.component.html',
-  styleUrls: ['./question.component.css']
+  selector: 'app-iq-test-questions',
+  templateUrl: './iq-test-questions.component.html',
+  styleUrls: ['./iq-test-questions.component.css']
 })
-export class QuestionComponent implements OnInit {
+export class IqTestQuestionsComponent implements OnInit, CanComponentDeactivate {
+
   httpSubscription;
-  levelid;
+  test_key;
   loading: boolean = true;
   sloading: boolean;
-  eligibility = localStorage.getItem('level');
   queres;
   ansres;
   timeout: boolean;
@@ -24,49 +26,40 @@ export class QuestionComponent implements OnInit {
   duration;
   errFlag: boolean;
   ans_arr:number[] = [];
-  cans:number[] = [];
+  answered:number[] = [];
+  qno;
+  current;
 
   constructor(public authService: AuthService, 
       private dataService: DataService, 
       private toast: ToastService,
       private router: Router, 
-      private SEO: SeoService,
-      private route: ActivatedRoute) 
-      {
-        this.router.routeReuseStrategy.shouldReuseRoute = function() {
-        return false;
-      }
-   }
+      private SEO: SeoService) 
+      { }
 
   ngOnInit(): void {
-
-    this.route.paramMap.subscribe(params => {
-      this.levelid = +params.get('levelid');
-    });
 
     this.getQuestion();
   }
 
   getQuestion() {
     this.clearParams();
-    let url = 'https://www.iqlevel.net/api/get-question';
-    let data = {'level':this.levelid};
-    this.httpSubscription = this.dataService.authpost(url, data).subscribe(res => {
+    let url = 'https://www.iqlevel.net/api/get-iq-question';
+    this.httpSubscription = this.dataService.authget(url).subscribe(res => {
       this.loading = false;
       if(res.status == 1) {
         this.queres = res;
+        this.test_key = res.tkey;
         if(res.time) {
           this.duration = res.time;
+          this.qno = res.questions.length;
+          this.current = 0;
           this.cTimer();
-          this.SEO.setTitle(res.question.question);
+          this.SEO.setTitle(res.questions[this.current].question);
         }
       }
       else {
         this.errFlag = true;
-        if(res.status == 204) {
-          //NO QUESTIONS
-          this.next();
-        }
         throw res.err;
       }
     },
@@ -78,36 +71,31 @@ export class QuestionComponent implements OnInit {
       // else if(error instanceof UnauthorisedError)
       //   this.authService.logout();
       // else
-      //   throw 'Unexpected Error Occured!';
-      throw error;
+        throw error;
     });
   }
 
   submitAns() {
-    let url = 'https://www.iqlevel.net/api/answer';
+    let url = 'https://www.iqlevel.net/api/iq-answer';
     let pdata:any = {};
-    pdata.level = this.levelid;
-    pdata.qid = this.queres.question.qid;
-    if(this.queres.question.optiontype == 1) {
-      if(this.queres.question.anstype == 1 && this.ans_arr.length != 1) 
+    pdata.qid = this.queres.questions[this.current].qid;
+    pdata.qno = (this.current + 1);
+    if(this.queres.questions[this.current].optiontype == 1) {
+      if(this.queres.questions[this.current].anstype == 1 && this.ans_arr.length != 1) 
         throw 'Please Select an Answer!';
-      if(this.queres.question.anstype == 2 && this.ans_arr.length != 2) 
+      if(this.queres.questions[this.current].anstype == 2 && this.ans_arr.length != 2) 
         throw 'Please Select 2 Answers!';
       pdata.ans = this.ans_arr;
     }
-    if(this.queres.question.optiontype == 2) {
+    if(this.queres.questions[this.current].optiontype == 2) {
       if(this.qtans === '' || this.qtans == null) 
         throw 'Answer Cannnot be Empty!';
       pdata.ans = this.qtans;
     }
     if(this.queres.time) {
-      pdata.token = this.queres.queToken;
+      pdata.token = this.queres.testToken;
     }
 
-    //CLEAR TIMEOUTS
-    this.timeout = false;
-    this.duration = null;
-    clearInterval(this.x);
     //FLAG
     this.sloading = true;
 
@@ -115,11 +103,9 @@ export class QuestionComponent implements OnInit {
       this.sloading = false;
       if(res.status == 1) {
         this.ansres = res;
-        this.cans = this.ansres.correctAns.split(' ');
-        localStorage.setItem('level', this.ansres.eligibility);
-        this.eligibility = this.ansres.eligibility;
-        //SET IQ SCORE IN LOCALSTORAGE
-        this.authService.setUserScore = this.ansres.score;
+        if(this.answered.indexOf(this.current) == -1)
+          this.answered.push(this.current);
+        this.next();
       }
       else {
         throw res.err;
@@ -133,15 +119,15 @@ export class QuestionComponent implements OnInit {
       //   throw 'No Internet!';
       // if(error instanceof UnauthorisedError)
       //   this.authService.logout();
-      // throw 'Unexpected Error Occured!';
       throw error;
     });
   }
 
   selAns(id) {
+    if(this.sloading) return;
     if(this.ans_arr.indexOf(id) == -1)
       this.ans_arr.push(id);
-    let max = this.queres.question.anstype;
+    let max = this.queres.questions[this.current].anstype;
     if(this.ans_arr.length > max) {
       this.ans_arr.shift();
     }
@@ -166,8 +152,8 @@ export class QuestionComponent implements OnInit {
 
         if (--timer < 0) {
            this.timeout = true;
-           this.getQuestion();
            clearInterval(this.x);
+           this.router.navigate(['result']);
         }
         if(timer == 10) {
           this.toast.show('Less Than 10 Sec Left!', 'error');
@@ -175,11 +161,35 @@ export class QuestionComponent implements OnInit {
         --this.duration;
   }
 
-  next() {
-    if(this.eligibility > this.levelid) {
-      this.router.navigate(['/level/' + (this.levelid + 1)]);
+  next() { 
+    if(this.sloading) return;
+    if(this.current >= (this.qno - 1)) {
+      return;
     }
-    else return;
+    this.qtans = null;
+    this.ansres = null;
+    this.ans_arr.length = 0;
+    this.current++;
+    this.SEO.setTitle(this.queres.questions[this.current].question);
+  }
+
+  selQue(i) {
+    if(this.sloading) return;
+    if(i > (this.qno - 1)) {
+      return;
+    }
+    this.qtans = null;
+    this.ansres = null;
+    this.ans_arr.length = 0;
+    this.current = i;
+    this.SEO.setTitle(this.queres.questions[this.current].question);
+  }
+
+  canDeactivate():Observable<boolean> | Promise<boolean> | boolean {
+    if(this.qno == this.answered.length && !this.loading)
+      return true;
+    else
+      return confirm('Are you sure you want to quit?');
   }
 
   ngOnDestroy() {
@@ -199,7 +209,7 @@ export class QuestionComponent implements OnInit {
     this.ansres = null;
     this.errFlag = false;
     this.ans_arr.length = 0;
-    this.cans.length = 0;
+    this.answered.length = 0;
   }
 
   reload() {

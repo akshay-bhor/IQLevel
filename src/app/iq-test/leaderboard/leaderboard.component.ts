@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthService } from '../services/auth.service';
-import { DataService } from '../services/data.service';
-import { SeoService } from '../services/seo.service';
+import { AuthService } from '../../services/auth.service';
+import { DataService } from '../../services/data.service';
+import { SeoService } from '../../services/seo.service';
 
 @Component({
   selector: 'app-leaderboard',
@@ -78,6 +78,7 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
     if(this.httpSubscription)
       this.httpSubscription.unsubscribe();
     this.loading = true;
+    this.errFlag = false;
   }
 
 }
