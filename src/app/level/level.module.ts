@@ -8,12 +8,14 @@ import { LevelRoutingModule } from "./level-routing.module";
 import { LevelComponent } from "./level.component";
 import { QuestionComponent } from "./question/question.component";
 import { CommonModule } from "@angular/common";
+import { LeaderboardComponent } from "./leaderboard/leaderboard.component";
 
 @NgModule({
     declarations: [
         LevelListComponent,
         LevelComponent,
-        QuestionComponent
+        QuestionComponent,
+        LeaderboardComponent
     ],
     imports: [
         CommonModule,

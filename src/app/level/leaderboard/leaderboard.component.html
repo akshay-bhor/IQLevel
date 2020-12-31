@@ -7,7 +7,6 @@
         <a mat-raised-button [routerLinkActive]="'mat-primary'" [routerLink]="'/level/leaderboard'" class="block">Level</a>
     </div>
 </div>
-
 <!-- Spinner -->
 <div *ngIf="loading && page == 1">
     <mat-spinner  style="margin:0 auto;" class="mat-display-4"></mat-spinner>
@@ -18,11 +17,15 @@
         <div class="mat-title">MY STATS</div>
         <mat-divider></mat-divider>
         <mat-grid-list cols="3" rowHeight="70px">
-            <div class="grid-5 l">
+            <div class="grid-3 l">
                 <div class="block text-center small-px bold tmar">Rank</div>
                 <div class="block text-center mat-title bold">{{ rankings.userData.rank }}</div>
             </div>
-            <div class="grid-5 l">
+            <div class="grid-3 l">
+                <div class="block text-center small-px bold tmar">Level</div>
+                <div class="block text-center mat-title bold">{{ rankings.userData.level }}</div>
+            </div>
+            <div class="grid-3 l">
                 <div class="block text-center small-px bold tmar">IQ</div>
                 <div class="block text-center mat-title bold tgreen">{{ rankings.userData.iq }}</div>
             </div>
@@ -50,6 +53,7 @@
                         <div class="grid-2 mat-title bold l">{{ rData.rank }}</div>  
                         <div class="grid-5 mat-title bold l">
                             {{ rData.user }}
+                            <div class="block small-px bold">Level: {{ rData.level }}</div>
                         </div>  
                         <div class="grid-3 text-center mat-title bold r" 
                         [ngClass]="{ 'tgreen': rData.rank != rankings.userData.rank }">{{ rData.iq }}</div>  

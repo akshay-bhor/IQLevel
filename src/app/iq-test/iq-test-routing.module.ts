@@ -6,7 +6,7 @@ import { IqTestHistoryComponent } from "./iq-test-history/iq-test-history.compon
 import { IqExitGuardService } from "./iq-test-questions/iq-exit-guard.service";
 import { IqTestQuestionsComponent } from "./iq-test-questions/iq-test-questions.component";
 import { IqTestComponent } from "./iq-test.component";
-import { LeaderboardComponent } from "./leaderboard/leaderboard.component";
+import { LeaderboardComponent } from "../iq-test/leaderboard/leaderboard.component";
 import { ResultComponent } from "./result/result.component";
 
 const Routes: Routes = [

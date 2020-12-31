@@ -31,7 +31,7 @@ export class LeaderboardComponent implements OnInit, OnDestroy {
   getRankData() {
     this.clearParams();
     this.postData.p = this.page;
-    this.postData.type = 'iq-test';
+    this.postData.type = 'level';
 
     let url = "https://www.iqlevel.net/api/get-rank";
     this.httpSubscription = this.dataService.authpost(url, this.postData).subscribe(res => {

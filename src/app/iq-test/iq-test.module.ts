@@ -4,7 +4,7 @@ import { MaterialModule } from "../material.module";
 import { IqTestHistoryComponent } from "./iq-test-history/iq-test-history.component";
 import { IqTestRoutingModule } from "./iq-test-routing.module";
 import { IqTestComponent } from "./iq-test.component";
-import { LeaderboardComponent } from "./leaderboard/leaderboard.component";
+import { LeaderboardComponent } from "../iq-test/leaderboard/leaderboard.component";
 import { ResultComponent } from "./result/result.component";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";

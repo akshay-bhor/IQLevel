@@ -105,6 +105,11 @@ img {
     .pagination a {
         float: none!important;
       }
+    .ebig {
+        font-size: 160%!important;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
 }
 
 .home-mid {
@@ -401,7 +406,9 @@ th {
 }
 
 .ebig {
-    font-size: 200%!important
+    font-size: 200%;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 .mat-icon-ebig {
     height:80px!important;

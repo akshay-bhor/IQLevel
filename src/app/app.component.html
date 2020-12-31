@@ -34,7 +34,7 @@
         <a mat-list-item routerLink="/iq-test/history" class="with-icon"><mat-icon>history</mat-icon>&nbsp; History</a>
         <a mat-list-item routerLink="/iq-test/leaderboard" class="with-icon"><mat-icon>military_tech</mat-icon>&nbsp; Leaderboard</a>
         <!-- g_id_signout to sign out google and prohibit auto seletion -->
-        <a mat-list-item (click)="authService.logout();" id="g_id_signout" class="with-icon g_id_signout"><mat-icon>power_settings_new</mat-icon>&nbsp; Logout</a>
+        <a mat-list-item (click)="authService.logout(); gSignOut();" class="with-icon g_id_signout"><mat-icon>power_settings_new</mat-icon>&nbsp; Logout</a>
       </div>
     </mat-nav-list>
   </mat-sidenav>

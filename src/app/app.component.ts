@@ -5,6 +5,7 @@ import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Rout
 import { SeoService } from './services/seo.service';
 
 declare let gtag:Function;
+declare let googleSignOut:Function;
 
 @Component({
   selector: 'app-root',
@@ -84,4 +85,7 @@ export class AppComponent {
     }
   }
 
+  gSignOut() {
+    googleSignOut();
+  }
 }
