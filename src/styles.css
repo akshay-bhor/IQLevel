@@ -25,7 +25,9 @@ a.disabled {
     font-size: 80%;
     color: #777
 }
-
+.light-grey {
+    color: #777
+}
 .smallgrey {
     font-size: 90%;
     color: #212121
@@ -351,7 +353,9 @@ td {
     overflow: hidden;
     box-sizing: border-box
 }
-
+.otpad-8 {
+    padding-top: 8px;
+}
 .tpad-5 {
     padding: 5px 0;
     overflow: hidden;
@@ -789,6 +793,13 @@ p {
       height: 200px;
       width: auto;
       margin:auto
+  }
+  .profile-img {
+      display: block;
+      width: auto;
+      margin: auto;
+      max-height: 150px;
+      object-fit: contain;
   }
 .mat-toolbar {
     position: fixed;

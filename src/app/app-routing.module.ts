@@ -28,6 +28,10 @@ const appRoutes: Routes = [
         path: 'iq-test',
         loadChildren: () => import('./iq-test/iq-test.module').then(i => i.IqTestModule)
       },
+      {
+        path: 'account',
+        loadChildren: () => import('./account/account.module').then(a => a.AccountModule)
+      },
       { path:'**', redirectTo: '' }
 ];
 

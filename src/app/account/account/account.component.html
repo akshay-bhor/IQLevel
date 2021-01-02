@@ -1,0 +1,78 @@
+<mat-card class="block">
+        <div class="grid-3 l">
+            <img src="https://iqlevel.net/assets/icons/dp.png" alt="Profile Image" class="profile-img">
+        </div>
+      <div class="grid-7 l" style="padding-left: 15px;">
+        <div class="mat-display-1 ptpad" style="margin-bottom: 20px;">
+            {{ authService.getUserData.name ? authService.getUserData.name : authService.getUserData.username }}
+        </div>
+        <div class="mat-headline light-grey">{{ authService.getUserData.iq | number:'1.0-0' }} IQ</div>
+      </div>
+  </mat-card>
+  <mat-card class="tmar">
+      <mat-card-title>Personal Informartion</mat-card-title>
+      <mat-divider></mat-divider>
+      <mat-card-content class="tmar">
+          <div class="mat-caption otpad-8">Username</div>
+          <div class="mat-subheading-1">{{ authService.getUserData.username }}</div>
+          <mat-divider></mat-divider>
+          <div class="mat-caption otpad-8">Email</div>
+          <div class="mat-subheading-1">{{ authService.getUserData.mail }}</div>
+          <mat-divider></mat-divider>
+          <div class="mat-caption otpad-8">Age</div>
+          <div class="mat-subheading-1">{{ authService.getUserData.age }}</div>
+          <mat-divider></mat-divider>
+          <div class="mat-caption otpad-8">Joined on</div>
+          <div class="mat-subheading-1">{{ authService.getUserData.regon | date: 'MMM d, y h:mm a' }}</div>
+      </mat-card-content>
+  </mat-card>
+    <mat-expansion-panel *ngIf="authService.getUserData.signin == 'email'">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Change Password
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+
+        <div class="block tgreen bold">{{ successMsg }}</div>
+
+        <form [formGroup]="form" (ngSubmit)="cPass()">
+
+            <mat-form-field class="block tmar">
+                <mat-label>Old Password</mat-label>
+                <input matInput
+                formControlName="opass"
+                type="password" name="opass" />
+                <mat-error class="alert alert-danger" *ngIf="f.opass.touched && !f.opass.valid">
+                    <div *ngIf="f.opass.errors.required"> Old Password is Required!</div>
+                    <div *ngIf="f.opass.errors.minlength">Minimum Required Length is 8!</div>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="block tmar">
+                <mat-label>New Password</mat-label>
+                <input matInput
+                formControlName="npass"
+                type="password" name="npass" />
+                <mat-error class="alert alert-danger" *ngIf="f.npass.touched && !f.npass.valid">
+                    <div *ngIf="f.npass.errors.required"> New Password is Required!</div>
+                    <div *ngIf="f.npass.errors.minlength">Minimum Required Length is 8!</div>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="block tmar">
+                <mat-label>Confirm Password</mat-label>
+                <input matInput
+                formControlName="cpass"
+                type="password" name="cpass" />
+                <mat-error class="alert alert-danger" *ngIf="f.cpass.touched && !f.cpass.valid">
+                    <div *ngIf="f.cpass.errors.required"> Confirm Password is Required!</div>
+                    <div *ngIf="f.cpass.errors.mustMatch">Passwords Don't Match!</div>
+                </mat-error>
+            </mat-form-field>
+
+            <input type="submit" [disabled]="!form.valid || loading" name="submit" value="Submit" id="submit" class="btn-c mat-raised-button mat-primary block tmar" />
+
+        </form>
+
+    </mat-expansion-panel>
+    
