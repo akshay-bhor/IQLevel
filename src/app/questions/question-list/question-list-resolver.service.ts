@@ -4,6 +4,11 @@ import { Observable, of } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { DataService } from '../../services/data.service';
 import 'rxjs/add/operator/catch';
+import * as fromApp from '../../store/app.reducer';
+import { Store } from '@ngrx/store';
+import { Actions, ofType } from '@ngrx/effects';
+import { map, switchMap, take } from 'rxjs/operators';
+import * as QuesListActions from '../store/ques-list.actions'
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +16,8 @@ import 'rxjs/add/operator/catch';
 export class QuestionListResolverService implements Resolve<any> {
   url;
   postData:any = {}
-  constructor(private dataService:DataService, private authService: AuthService) { 
+  constructor(private dataService:DataService, private authService: AuthService,
+    private store: Store<fromApp.appState>, private actions$: Actions) { 
     this.url = "https://www.iqlevel.net/api/questions";
   }
 
@@ -21,17 +27,28 @@ export class QuestionListResolverService implements Resolve<any> {
       let p = +route.queryParams['p'];
       if(!p) p = 1;
       this.postData.p = p;
-      return this.dataService.post(this.url, this.postData).catch(error => {
-        // if(error instanceof NetworkError)
-        //     throw 'No Internet!';
-        //   else if(error instanceof UnauthorisedError)
-        //     this.authService.logout();
-        //   else if(error instanceof GatewayTimeoutError)
-        //     throw 'Request Timed Out!';
-        //   else
-            throw error;
+      // return this.dataService.post(this.url, this.postData).catch(error => {
+      //       throw error;
 
-        return of();
-      });
+      //   return of();
+      // });
+      return this.store.select('quesList').pipe(
+        take(1),
+        map(queList => {
+          return queList.pageData[p];
+        }),
+        switchMap(list => { 
+          if(!list) {
+            this.store.dispatch(QuesListActions.fetchQuesList({ page: p }));
+            return this.actions$.pipe(
+              ofType(QuesListActions.setQuesList),
+              take(1)
+            )
+          }
+          else {
+            return of(list)
+          }
+        })
+      )
   }
 }

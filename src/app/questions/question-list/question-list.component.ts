@@ -1,6 +1,8 @@
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { SeoService } from './../../services/seo.service';
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../../store/app.reducer';
 
 @Component({
   selector: 'app-question-list',
@@ -11,13 +13,14 @@ export class QuestionListComponent implements OnInit {
   que;
   page;
   httpSubscription;
-  loading:boolean;
+  loading:boolean = true;
   hasNext:boolean = true;
   errFlag:boolean;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private store: Store<fromApp.appState>,
     private SEO: SeoService) { 
       this.router.routeReuseStrategy.shouldReuseRoute = function() {
         return false;
@@ -33,11 +36,15 @@ export class QuestionListComponent implements OnInit {
       else
         this.page = 1;
       //GET QUESTIONS
-      this.route.data.subscribe((data: Data) => {
-        this.clearParams();
-        this.que = data['ques'];
+      // this.route.data.subscribe((data: Data) => {
+      //   this.clearParams();
+      //   this.que = data['ques'];
 
-        this.loadQues();
+      //   this.loadQues();
+      // })
+      this.store.select('quesList').subscribe(queData => {
+        this.que = queData.pageData[this.page];
+        this.loading = false
       })
     });
 

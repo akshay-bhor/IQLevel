@@ -8,6 +8,9 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule, EffectsRootModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -20,6 +23,8 @@ import { environment } from '../environments/environment';
 import { GauthComponent } from './gauth/gauth.component';
 import { GoogleOneTapComponent } from './google-one-tap/google-one-tap.component';
 import { SharedModule } from './shared.module';
+import * as fromApp from './store/app.reducer'
+import { QuesListEffects } from './questions/store/ques-list.effects';
 
 @NgModule({
   declarations: [
@@ -40,7 +45,10 @@ import { SharedModule } from './shared.module';
     MaterialModule,
     SharedModule,
     AppRoutingModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    StoreModule.forRoot(fromApp.appReducer),
+    EffectsModule.forRoot([QuesListEffects]),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    StoreDevtoolsModule.instrument({ logOnly: environment.production })
   ],
   providers: [
     AuthService,
