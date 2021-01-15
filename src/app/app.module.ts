@@ -24,7 +24,8 @@ import { GauthComponent } from './gauth/gauth.component';
 import { GoogleOneTapComponent } from './google-one-tap/google-one-tap.component';
 import { SharedModule } from './shared.module';
 import * as fromApp from './store/app.reducer'
-import { QuesListEffects } from './questions/store/ques-list.effects';
+import { QuesListEffects } from './questions/question-list/store/ques-list.effects';
+import { QuesDetailsEffects } from './questions/ques-details/store/ques-details.effects';
 
 @NgModule({
   declarations: [
@@ -46,7 +47,7 @@ import { QuesListEffects } from './questions/store/ques-list.effects';
     SharedModule,
     AppRoutingModule,
     StoreModule.forRoot(fromApp.appReducer),
-    EffectsModule.forRoot([QuesListEffects]),
+    EffectsModule.forRoot([QuesListEffects, QuesDetailsEffects]),
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     StoreDevtoolsModule.instrument({ logOnly: environment.production })
   ],

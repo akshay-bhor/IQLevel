@@ -1,9 +1,12 @@
 import { ContinueDialogComponent } from '../../continue-dialog/continue-dialog.component';
 import { SeoService } from '../../services/seo.service';
-import { ActivatedRoute, Data, Router } from '@angular/router';
-import { DataService } from '../../services/data.service';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Store } from '@ngrx/store';
+import * as fromApp from '../../store/app.reducer';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ques-details',
@@ -17,13 +20,14 @@ export class QuesDetailsComponent implements OnInit {
   errFlag:boolean;
   loading:boolean;
   ans_arr:number[] = [];
-  httpSubscription;
+  httpSubscription: Subscription;
+  storeSubs: Subscription
 
   constructor(
-    private dataService: DataService, 
     private SEO: SeoService,
     private router: Router,
     public dialog: MatDialog,
+    private store: Store<fromApp.appState>,
     private route:ActivatedRoute) { 
       this.router.routeReuseStrategy.shouldReuseRoute = function() {
         return false;
@@ -39,14 +43,21 @@ export class QuesDetailsComponent implements OnInit {
     // this.getQuestion(this.qid);
     
     //GET Data from resolver
-    this.route.data.subscribe((data: Data) => {
-      this.queres = data['queData'];
+    // this.route.data.subscribe((data: Data) => {
+    //   this.queres = data['queData'];
 
+    //   this.loadQueData();
+    // })
+    //Get Data from store
+    this.storeSubs = this.store.select('quesDetails').pipe(take(1)).subscribe(res => {
+      this.queres = res.resData[this.qid]
+      
       this.loadQueData();
     })
   }
 
   loadQueData() {
+    // console.log(this.queres)
       if(this.queres.status == 1) {
         // Set Title
         this.setTitle(this.queres.title);
@@ -135,6 +146,8 @@ export class QuesDetailsComponent implements OnInit {
   clearParams() {
     if(this.httpSubscription)
       this.httpSubscription.unsubscribe();
+    if(this.storeSubs)
+      this.storeSubs.unsubscribe();
     this.qid = null;
     this.question = null;
     this.loading = true;

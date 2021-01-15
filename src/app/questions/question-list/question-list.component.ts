@@ -3,6 +3,7 @@ import { SeoService } from './../../services/seo.service';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import * as fromApp from '../../store/app.reducer';
+import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-question-list',
@@ -13,6 +14,7 @@ export class QuestionListComponent implements OnInit {
   que;
   page;
   httpSubscription;
+  storeSubs;
   loading:boolean = true;
   hasNext:boolean = true;
   errFlag:boolean;
@@ -42,7 +44,7 @@ export class QuestionListComponent implements OnInit {
 
       //   this.loadQues();
       // })
-      this.store.select('quesList').subscribe(queData => {
+      this.storeSubs = this.store.select('quesList').pipe(take(1)).subscribe(queData => {
         this.que = queData.pageData[this.page];
         this.loading = false
       })
@@ -102,6 +104,8 @@ export class QuestionListComponent implements OnInit {
   clearParams() {
     if(this.httpSubscription)
       this.httpSubscription.unsubscribe();
+    if(this.storeSubs)
+      this.storeSubs.unsubscribe();
     this.loading = false;
     this.que = null;
     this.errFlag = false;

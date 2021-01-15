@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { QuesList } from '../ques-list.model';
+import { QuesList } from '../../ques-list.model';
 import *  as QuesListActions from './ques-list.actions';
 
 export interface queData {
@@ -16,7 +16,7 @@ const initialState: State = {
     pageData: []
 };
 
-const _quesDetailsReducer = createReducer(
+const _quesListReducer = createReducer(
     initialState,
     on (
         QuesListActions.setQuesList,
@@ -35,6 +35,6 @@ const _quesDetailsReducer = createReducer(
     )
 );
 
-export function QuesDetailsReducer(state: State = initialState, action: Action) {
-    return _quesDetailsReducer(state, action)
+export function QuesListReducer(state: State = initialState, action: Action) {
+    return _quesListReducer(state, action)
 }

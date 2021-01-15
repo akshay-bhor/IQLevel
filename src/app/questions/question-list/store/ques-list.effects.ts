@@ -1,13 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Actions, createEffect, Effect, ofType } from '@ngrx/effects';
+import { Actions, Effect, ofType } from '@ngrx/effects';
 import { HttpClient } from "@angular/common/http";
-import { Store } from  '@ngrx/store';
 import { switchMap, map, tap, catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 import * as QuesAction from './ques-list.actions';
-import { QuesList } from '../ques-list.model';
-import * as fromApp from '../../store/app.reducer';
+import { QuesList } from '../../ques-list.model';
 
 
 export interface resData {
@@ -25,7 +23,6 @@ const errHandler = (err: any) => {
         errMsg = "No Internet!"; break;
       case 404:
         errMsg = "URL Not Found!"; break;
-        break;
       case 504:
         errMsg = "Oops! Request Timed Out."; break;
       case 400:
@@ -49,19 +46,21 @@ export class QuesListEffects {
                         'p': action.page 
                     }
                 )
-            }),
-            map(res => {
-                if(res.status == 1) {
-                    return QuesAction.setQuesList({ payload: res, index: this.page })
-                }
-                else {
-                    let errMsg = res.err;
-                    return QuesAction.handleError({ msg: errMsg });
-                }  
-            }),
-            catchError(errRes => {
-                let errMsg = errHandler(errRes);
-                return of(QuesAction.handleError({ msg: errMsg }));
+                .pipe(
+                    map(res => {
+                        if(res.status == 1) {
+                            return QuesAction.setQuesList({ payload: res, index: this.page })
+                        }
+                        else {
+                            let errMsg = res.err;
+                            return QuesAction.handleError({ msg: errMsg });
+                        }  
+                    }),
+                    catchError(errRes => {
+                        let errMsg = errHandler(errRes);
+                        return of(QuesAction.handleError({ msg: errMsg }));
+                    })
+                )
             })
         ); 
 
@@ -69,12 +68,14 @@ export class QuesListEffects {
     handleError$ = 
     this.actions$.pipe(
         ofType(QuesAction.handleError),
-        tap(action => setTimeout(() => { throw action.msg  }, 0))
+        tap(action => setTimeout(() => { throw action.msg  }, 0)),
+        switchMap(() => {
+            return of({})
+        })
     );
 
     constructor (
         private actions$: Actions,
-        private http: HttpClient,
-        private store: Store<fromApp.appState>
+        private http: HttpClient
     ) {}
 }
