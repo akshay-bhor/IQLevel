@@ -6,7 +6,10 @@ import { GuestRegisterComponent } from './guest-register/guest-register.componen
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { AuthGuardService } from './services/auth-guard.service';
+import { AuthGuestGuardService } from './services/auth-guest-guard.service';
 import { LoggedInGuardService } from './services/loggedin-guard.service';
+import { SigninCompleteComponent } from './signin-complete/signin-complete.component';
 
 
 const appRoutes: Routes = [
@@ -16,6 +19,7 @@ const appRoutes: Routes = [
       { path: 'continue', component: ContinueComponent, canActivate: [LoggedInGuardService] },
       { path: 'gauth', component: GauthComponent, canActivate: [LoggedInGuardService] },
       { path: 'guest-register', component: GuestRegisterComponent, canActivate: [LoggedInGuardService] },
+      { path: 'complete-signin', component: SigninCompleteComponent, canActivate: [AuthGuardService, AuthGuestGuardService] },
       { 
         path: 'questions',
         loadChildren: () => import('./questions/questions.module').then(q => q.QuestionsModule)

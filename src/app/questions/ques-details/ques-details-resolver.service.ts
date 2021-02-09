@@ -38,28 +38,27 @@ export class QuesDetailsResolverService implements Resolve<any> {
         if(!list) {
           this.store.dispatch(QuesDetailsAction.fetchQuesDetails({ index: this.postData.qid }))
 
-          const res = this.actiions$.pipe(
-            ofType(QuesDetailsAction.setQuesDetails),
-            mapTo('true'),
+          return this.actiions$.pipe(
+            ofType(QuesDetailsAction.setQuesDetails, QuesDetailsAction.handleError),
             take(1)
           )
-          const errRes = this.actiions$.pipe(
-            ofType(QuesDetailsAction.handleError),
-            take(1),
-            mapTo('false')
-          )
+          // const errRes = this.actiions$.pipe(
+          //   ofType(QuesDetailsAction.handleError),
+          //   take(1),
+          //   mapTo('false')
+          // )
 
-          return race(res, errRes).pipe(
-            take(1),
-            switchMap(res => {
-              if(res == 'true') {
-                return of(true)
-              }
-              else {
-                return EMPTY
-              }
-            })
-          )
+          // return race(res, errRes).pipe(
+          //   take(1),
+          //   switchMap(res => {
+          //     if(res == 'true') {
+          //       return of(true)
+          //     }
+          //     else {
+          //       return EMPTY
+          //     }
+          //   })
+          // )
         } 
         else {
           return of(list)

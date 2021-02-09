@@ -7,19 +7,24 @@
         </div>
         <div class="block text-center" *ngIf="!loading && !err">
             <div class="mat-display-1">Welcome, {{ authService.getUserData.name ? authService.getUserData.name : authService.getUserData.username }}</div>
-            <h2 class="mat-headline">Your IQ Score is</h2>
-            <div class="mat-title">{{data.score}}</div>
+            <h2 class="mat-headline txt-grey">Your IQ Score is</h2>
+            <div class="mat-title bg-primary-sm round iblock" style="padding: 1.5em">{{data.score}}</div>
             <!--GRADE-->
-            <div class="tgreen mat-subheading-2" *ngIf="data.score > 130">Very superior</div>
-            <div class="tgreen mat-subheading-2" *ngIf="data.score > 120 && data.score < 129">Superior</div>
-            <div class="tgreen mat-subheading-2" *ngIf="data.score > 110 && data.score < 119">High Average</div>
-            <div class="tblue mat-subheading-2" *ngIf="data.score > 90 && data.score < 109">Average</div>
-            <div class="tblue mat-subheading-2" *ngIf="data.score > 80 && data.score < 89">Low Average</div>
-            <div class="tred mat-subheading-2" *ngIf="data.score > 70 && data.score < 79">Borderline</div>
+            <div class="tgreen mat-subheading-2" *ngIf="data.score >= 130">Very superior</div>
+            <div class="tgreen mat-subheading-2" *ngIf="data.score >= 120 && data.score <= 129">Superior</div>
+            <div class="tgreen mat-subheading-2" *ngIf="data.score >= 110 && data.score <= 119">High Average</div>
+            <div class="tblue mat-subheading-2" *ngIf="data.score >= 90 && data.score <= 109">Average</div>
+            <div class="tblue mat-subheading-2" *ngIf="data.score >= 80 && data.score <= 89">Low Average</div>
+            <div class="tred mat-subheading-2" *ngIf="data.score >= 70 && data.score <= 79">Borderline</div>
             <div class="tred mat-subheading-2" *ngIf="data.score <= 69">Extremely Low</div>
 
-            <div class="mat-title">Attempted - <span class="txt-grey">{{data.attempted}}</span></div>
-            <div class="mat-title">Correct - <span class="txt-grey">{{data.correct}}</span></div>
+            <div class="big">
+                <mat-icon class="tgreen">check_circle</mat-icon>
+                <span class="txt-grey"> {{data.correct}}/{{data.attempted}}</span>
+            </div>
+            <div class="block tpad">
+                <a routerLink="/iq-test/analyze/{{ test_key }}" class="btn-c">View Complete Analysis</a>
+            </div>
         </div>
         <div class="block" *ngIf="!loading && err">
             <button mat-raised-button color="primary" class="btn-c block" (click)="getScore()">Retry</button>

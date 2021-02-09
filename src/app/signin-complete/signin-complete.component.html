@@ -1,0 +1,39 @@
+
+    <mat-card>
+        <!-- Spinner -->
+        <div *ngIf="loading">
+           <mat-spinner  style="margin:0 auto;" class="mat-display-4"></mat-spinner>
+       </div>
+       <div *ngIf="!loading">
+           <h2>Complete Your Sign In</h2>
+           <form [formGroup]="form" (ngSubmit)="register()">
+               <mat-error *ngIf="invalidRegister" id="err" class="alert alert-danger">{{ formError }}</mat-error>
+               
+               <mat-form-field class="block tmar">
+                   <mat-label>Email</mat-label>
+                   <input matInput
+                   formControlName="email"
+                   type="text" name="email" id="email" />
+                   <mat-error class="alert alert-danger" *ngIf="f.email.touched && !f.email.valid">
+                       <div *ngIf="f.email.errors.email">Invalid Email!</div>
+                       <div *ngIf="f.email.errors.required">Email is Required!</div>
+                   </mat-error>
+               </mat-form-field>
+
+               <mat-form-field class="block tmar">
+                   <mat-label>Password</mat-label>
+                   <input matInput
+                   formControlName="pass"
+                   type="password" name="pass" id="pass" />
+                   <mat-error class="alert alert-danger" *ngIf="f.pass.touched && !f.pass.valid">
+                       <div *ngIf="f.pass.errors.required">Password is Required!</div>
+                       <div *ngIf="f.pass.errors.minlength">Min 8 Characters</div>
+                   </mat-error>
+               </mat-form-field>
+
+               <input type="submit" [disabled]="!form.valid || loading" name="register" value="Continue" id="submit" class="btn-c mat-raised-button mat-primary block tmar" />
+
+           </form>
+       </div>
+   </mat-card>
+

@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StoreModule } from '@ngrx/store';
-import { EffectsModule, EffectsRootModule } from '@ngrx/effects';
+import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -26,6 +26,7 @@ import { SharedModule } from './shared.module';
 import * as fromApp from './store/app.reducer'
 import { QuesListEffects } from './questions/question-list/store/ques-list.effects';
 import { QuesDetailsEffects } from './questions/ques-details/store/ques-details.effects';
+import { SigninCompleteComponent } from './signin-complete/signin-complete.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { QuesDetailsEffects } from './questions/ques-details/store/ques-details.
     RegisterComponent,
     GuestRegisterComponent,
     GauthComponent,
-    GoogleOneTapComponent
+    GoogleOneTapComponent,
+    SigninCompleteComponent
   ],
   imports: [
     BrowserModule,

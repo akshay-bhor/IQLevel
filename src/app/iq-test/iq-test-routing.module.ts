@@ -8,6 +8,7 @@ import { IqTestQuestionsComponent } from "./iq-test-questions/iq-test-questions.
 import { IqTestComponent } from "./iq-test.component";
 import { LeaderboardComponent } from "../iq-test/leaderboard/leaderboard.component";
 import { ResultComponent } from "./result/result.component";
+import { SignupCompleteGuardService } from "./signup-complete-guard.service";
 
 const Routes: Routes = [
     {
@@ -17,10 +18,10 @@ const Routes: Routes = [
         canActivateChild: [AuthGuardService],
         children: [
           { path: '', component: IqTestQuestionsComponent, canDeactivate: [IqExitGuardService] },
-          { path: 'result/:test_key', component: ResultComponent },
+          { path: 'result/:test_key', component: ResultComponent, canActivate: [SignupCompleteGuardService] },
           { path: 'leaderboard', component: LeaderboardComponent },
-          { path: 'analyze/:tkey', component: IqTestAnalysisComponent },
-          { path: 'history', component: IqTestHistoryComponent },
+          { path: 'analyze/:tkey', component: IqTestAnalysisComponent, canActivate: [SignupCompleteGuardService] },
+          { path: 'history', component: IqTestHistoryComponent, canActivate: [SignupCompleteGuardService] },
         ]
       },
 ];
