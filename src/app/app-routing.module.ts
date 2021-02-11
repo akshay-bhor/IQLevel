@@ -36,6 +36,10 @@ const appRoutes: Routes = [
         path: 'account',
         loadChildren: () => import('./account/account.module').then(a => a.AccountModule)
       },
+      {
+        path: 'payment',
+        loadChildren: () => import('./payment/payment.module').then(p => p.PaymentModule)
+      },
       { path:'**', redirectTo: '' }
 ];
 

@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  payAPI: 'https://payments.open.money/layer'
 };

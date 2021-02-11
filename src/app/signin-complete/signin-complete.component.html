@@ -5,7 +5,8 @@
            <mat-spinner  style="margin:0 auto;" class="mat-display-4"></mat-spinner>
        </div>
        <div *ngIf="!loading">
-           <h2>Complete Your Sign In</h2>
+           <h2>Finish Your Registration</h2>
+           <span class="tgreen">(Don't Worry! We have saved all your progress.)</span>
            <form [formGroup]="form" (ngSubmit)="register()">
                <mat-error *ngIf="invalidRegister" id="err" class="alert alert-danger">{{ formError }}</mat-error>
                

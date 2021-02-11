@@ -31,3 +31,6 @@ function handleOneTap(code) {
 function googleSignOut() {
       google.accounts.id.disableAutoSelect();
 }
+function callVerification(res) {  
+    window.angularComponentReference.zone.run(() => { window.angularComponentReference.callVerification(res); });  
+}  

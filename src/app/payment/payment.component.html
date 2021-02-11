@@ -1,0 +1,30 @@
+<mat-card class="text-center">
+    <div *ngIf="loading">
+        <div class="lds-ripple ebig"><div></div><div></div></div>
+    </div>
+    <div *ngIf="verifyProgress">
+        <div class="block bold">Verifying payment, please don't press back button!</div>
+    </div>
+    <div class="block" *ngIf="errFlag && scriptLoaded">
+        <button class="block" mat-raised-button color="primary" (click)="getInfo()">Retry</button>
+    </div>
+    <div class="block" *ngIf="!scriptLoaded">
+        <button class="block" mat-raised-button color="accent" (click)="reload()">Reload</button>
+    </div>
+    <div class="block" *ngIf="verifyErr">
+        <div class="tred big bold"><mat-icon>dangerous</mat-icon> {{verifyMsg}}</div>
+    </div>
+    <div class="block" *ngIf="!errFlag && !loading && scriptLoaded && !verifyErr">
+        <div class="ebig bold tblue" style="line-height: 1.5em;">
+            Well Done!
+            <br>
+            Want to see detailed report of your IQ Test?
+            <br>
+            Get instant access to to your detailed IQ test analysis and evaluation!
+        </div>
+        <div class="block big bold light-grey" style="margin-top: 2em;">For one time payment of &#8377; {{amt}} only!</div>
+        <div class="text-center" style="display: flex; justify-content: center;">
+            <button mat-raised-button color="accent" class="block btn-c tmar" (click)="pay()"><mat-icon>lock_open</mat-icon><span class="bold"> Unlock </span></button>
+        </div>
+    </div>
+</mat-card>
