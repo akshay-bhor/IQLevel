@@ -28,6 +28,9 @@ import { IqTestAnalysisComponent } from "./iq-test-history/iq-test-analysis/iq-t
         MaterialModule,
         SharedModule,
         IqTestRoutingModule,
+    ],
+    exports: [
+        IqTestHistoryComponent
     ]
 })
 export class IqTestModule {}

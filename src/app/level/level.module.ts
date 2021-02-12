@@ -9,6 +9,7 @@ import { LevelComponent } from "./level.component";
 import { QuestionComponent } from "./question/question.component";
 import { CommonModule } from "@angular/common";
 import { LeaderboardComponent } from "./leaderboard/leaderboard.component";
+import { IqTestModule } from "../iq-test/iq-test.module";
 
 @NgModule({
     declarations: [
@@ -23,7 +24,8 @@ import { LeaderboardComponent } from "./leaderboard/leaderboard.component";
         SharedModule,
         FormsModule,
         LevelRoutingModule,
-        MaterialModule
+        MaterialModule,
+        IqTestModule
     ]
 })
 export class LevelModule {}
