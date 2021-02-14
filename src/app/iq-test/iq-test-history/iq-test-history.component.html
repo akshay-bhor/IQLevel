@@ -1,45 +1,57 @@
-<!-- Spinner -->
-<div *ngIf="loading">
-    <mat-spinner  style="margin:0 auto;" class="mat-display-4"></mat-spinner>
-</div>
-<div class="block tmar" *ngIf="!loading && !errFlag">
+
+<div class="block tmar">
     <div class="mat-card">
         <div class="block">
             <div class="mat-title">
                 <span class="mat-headline l">History</span>
                 <span class="r">
                     <span class="smallgrey">Avg: </span>
-                    <span class="tgreen big">{{ tdata.avg }}</span>
+                    <span class="tgreen big">{{ iqavg }}</span>
                 </span>
             </div>
         </div>
         <mat-divider></mat-divider>
-        <div class="block" *ngFor="let test of tdata.data">
-            <div class="block tmar">
-                <div class="grid-5 l">
-                    <span class="block mat-title bold">{{ test.date }}</span>
-                    <mat-chip-list>
-                        <mat-chip color="accent">{{ test.remark }}</mat-chip>
-                    </mat-chip-list>
-                </div>
-                <div class="grid-2 l">
-                    <span class="text-center tgreen mat-title bold">
-                        <mat-chip-list>
-                            <mat-chip color="accent" selected>{{ test.score }}</mat-chip>
-                        </mat-chip-list>
-                    </span>
-                </div>
-                <div class="grid-3 l">
-                    <a mat-button color="primary" [routerLink]="['/iq-test','analyze', test.tkey]" class="r">Analyze</a>
-                </div>
-            </div>
-            <mat-divider></mat-divider>
+
+        <!-- Spinner -->
+        <div *ngIf="loading">
+            <mat-spinner  style="margin:0 auto;" class="mat-display-4"></mat-spinner>
         </div>
+
+        <div class="block text-center tred tmar" *ngIf="!loading && errFlag && errMsg">
+            <mat-icon style="vertical-align: text-top;">error</mat-icon>
+            <span class="bold"> {{errMsg}}</span>
+        </div>
+
+        <div class="block tmar" *ngIf="!loading && errFlag">
+            <mat-card class="block">
+                <a mat-raised-button color="accent" class="grid-4 btn-c l" routerLink="/level">Go Back</a>
+                <a mat-raised-button color="primary" class="grid-4 btn-c r" routerLink="/iq-test">Take a IQ Test</a>
+            </mat-card>
+        </div>
+
+        <div class="block" *ngIf="!loading && !errFlag">
+            <div class="block" *ngFor="let test of tdata.data">
+                <div class="block tmar">
+                    <div class="grid-5 l">
+                        <span class="block mat-title bold">{{ test.date }}</span>
+                        <mat-chip-list>
+                            <mat-chip color="accent">{{ test.remark }}</mat-chip>
+                        </mat-chip-list>
+                    </div>
+                    <div class="grid-2 l">
+                        <span class="text-center tgreen mat-title bold">
+                            <mat-chip-list>
+                                <mat-chip color="accent" selected>{{ test.score }}</mat-chip>
+                            </mat-chip-list>
+                        </span>
+                    </div>
+                    <div class="grid-3 l">
+                        <a mat-button color="primary" [routerLink]="['/iq-test','analyze', test.tkey]" class="r">Analyze</a>
+                    </div>
+                </div>
+                <mat-divider></mat-divider>
+            </div>
+        </div>
+        
     </div>
-</div>
-<div class="block tmar" *ngIf="!loading && errFlag">
-    <mat-card class="block">
-        <a mat-raised-button color="accent" class="grid-4 btn-c l" routerLink="/level">Go Back</a>
-        <a mat-raised-button color="primary" class="grid-4 btn-c r" routerLink="/iq-test">Take a IQ Test</a>
-    </mat-card>
 </div>

@@ -12,6 +12,8 @@ export class IqTestHistoryComponent implements OnInit, OnDestroy {
   loading: boolean = true;
   errFlag: boolean = false;
   tdata;
+  iqavg = 'NA';
+  errMsg: string = '';
 
   constructor(
     private dataService: DataService,
@@ -26,27 +28,23 @@ export class IqTestHistoryComponent implements OnInit, OnDestroy {
   }
 
   getIqHistory() {
+    this.clearParams();
+    this.loading = true;
     let url = "https://www.iqlevel.net/api/iq-tests-history";
     this.httpSubscription = this.dataService.authget(url).subscribe(res => {
       this.loading = false;
       if(res.status == 1) {
         this.tdata = res;
+        this.iqavg = this.tdata.avg;
       }
       else {
         this.errFlag = true;
-        throw res.err;
+        this.errMsg = res.err;
       }
     },
     (error) => {
       this.errFlag = true;
       this.loading = false;
-      // if(error instanceof NetworkError)
-      //   throw 'No Internet!';
-      // else if(error instanceof UnauthorisedError)
-      //   this.authService.logout();
-      // else if(error instanceof GatewayTimeoutError)
-      //   throw 'Request Timed Out!';
-      // else
         throw error;
     });
   }
@@ -59,5 +57,7 @@ export class IqTestHistoryComponent implements OnInit, OnDestroy {
     if(this.httpSubscription)
       this.httpSubscription.unsubscribe();
     this.errFlag = false;
+    this.errMsg = '';
+    this.loading = false;
   }
 }
