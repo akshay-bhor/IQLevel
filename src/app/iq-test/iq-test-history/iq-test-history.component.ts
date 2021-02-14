@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { DataService } from '../../services/data.service';
 import { SeoService } from '../../services/seo.service';
 
@@ -8,6 +8,7 @@ import { SeoService } from '../../services/seo.service';
   styleUrls: ['./iq-test-history.component.css']
 })
 export class IqTestHistoryComponent implements OnInit, OnDestroy {
+  @Input() setTitle: boolean = true;
   httpSubscription;
   loading: boolean = true;
   errFlag: boolean = false;
@@ -21,7 +22,8 @@ export class IqTestHistoryComponent implements OnInit, OnDestroy {
     ) { }
 
   ngOnInit(): void {
-    this.SEO.setTitle('IQ Tests History');
+    if(this.setTitle)
+      this.SEO.setTitle('IQ Tests History');
 
     //Fetch History
     this.getIqHistory();
