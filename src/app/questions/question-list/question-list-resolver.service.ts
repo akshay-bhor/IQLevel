@@ -5,7 +5,7 @@ import 'rxjs/add/operator/catch';
 import * as fromApp from '../../store/app.reducer';
 import { Store } from '@ngrx/store';
 import { Actions, ofType } from '@ngrx/effects';
-import { map, mapTo, switchMap, take } from 'rxjs/operators';
+import { map, mapTo, switchMap, take, tap } from 'rxjs/operators';
 import * as QuesListActions from './store/ques-list.actions'
 
 @Injectable({
@@ -41,25 +41,16 @@ export class QuestionListResolverService implements Resolve<any> {
             this.store.dispatch(QuesListActions.fetchQuesList({ page: p }));
             const res = this.actions$.pipe(
               ofType(QuesListActions.setQuesList),
-              mapTo('true'),
               take(1)
             )
             const errRes = this.actions$.pipe(
               ofType(QuesListActions.handleError),
-              mapTo('false'),
-              take(1)
+              take(1),
+              tap(() => { 
+                this.router.navigate([this.router.url]);
+              })
             )
-            return race(res, errRes).pipe(
-                take(1),
-                switchMap(res => {
-                  if(res == 'true') {
-                    return of(true)
-                  }
-                  else {
-                    return EMPTY
-                  }
-                })
-              )
+            return race(res, errRes).pipe(take(1));
           }
           else {
             return of(list)
