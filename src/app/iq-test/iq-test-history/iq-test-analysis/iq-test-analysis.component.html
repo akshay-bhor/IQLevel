@@ -58,11 +58,11 @@
                         <div *ngIf="queres.ans" class="tmar">
                             <span class="tgreen bold with-icon" *ngIf="queres.isCorrect == 1">
                                 <mat-icon>done</mat-icon>
-                                &nbsp;Your Answer is Correct! - {{ queres.answered }}
+                                &nbsp;Your Answer is Correct! - ( {{ queres.answered }} )
                             </span>
                             <span class="bold" *ngIf="queres.isCorrect == 0">
-                                <span class="block tred with-icon"><mat-icon>clear</mat-icon>&nbsp;Your Answer - {{ queres.answered }}</span>
-                                <span class="block tgreen with-icon"><mat-icon>done</mat-icon>&nbsp;Correct Answer - {{ queres.ans }}</span>
+                                <span class="block tred with-icon"><mat-icon>clear</mat-icon>&nbsp;Your Answer - ( {{ queres.answered }} )</span>
+                                <span class="block tgreen with-icon"><mat-icon>done</mat-icon>&nbsp;Correct Answer - ( {{ queres.ans }} )</span>
                             </span>
                         </div>
                     </div>
@@ -74,7 +74,7 @@
                        (closed)="panelOpenState=false" style="box-shadow: none;">
                     <mat-expansion-panel-header style="padding-left: 0;">
                         <mat-panel-title>
-                            View Explaination
+                            <span class="tblue">View Explaination</span>span>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
                     <div class="block" [innerHTML]="queres.exp"></div>

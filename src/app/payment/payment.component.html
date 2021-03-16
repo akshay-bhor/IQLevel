@@ -8,7 +8,7 @@
     <div class="block" *ngIf="errFlag && scriptLoaded">
         <button class="block" mat-raised-button color="primary" (click)="getInfo()">Retry</button>
     </div>
-    <div class="block" *ngIf="!scriptLoaded">
+    <div class="block" *ngIf="!scriptLoaded && !loading">
         <button class="block" mat-raised-button color="accent" (click)="reload()">Reload</button>
     </div>
     <div class="block" *ngIf="verifyErr">
