@@ -13,9 +13,8 @@ export class PayGaurdService implements CanActivate {
 
   canActivate(next, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     if(this.authService.getUserData.pro) {
-      if(this.authService.getUserData.pro == 1) {
+      if(this.authService.getUserData.pro >= 1) {
         this.isPro = true
-        console.log('ifcheck');
       }
       else {
         this.isPro = false
