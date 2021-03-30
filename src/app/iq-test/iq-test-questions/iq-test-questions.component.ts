@@ -153,10 +153,10 @@ export class IqTestQuestionsComponent implements OnInit, CanComponentDeactivate 
         if (--timer < 0) {
            this.timeout = true;
            clearInterval(this.x);
-           this.router.navigate(['result']);
+           this.router.navigate(['result', this.test_key]);
         }
         if(timer == 10) {
-          this.toast.show('Less Than 10 Sec Left!', 'error');
+          this.toast.show('Less Than 10 Sec Left!', 'warning');
         }
         --this.duration;
   }
