@@ -5,6 +5,7 @@ import { GauthComponent } from './gauth/gauth.component';
 import { GuestRegisterComponent } from './guest-register/guest-register.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 import { RegisterComponent } from './register/register.component';
 import { AuthGuardService } from './services/auth-guard.service';
 import { AuthGuestGuardService } from './services/auth-guest-guard.service';
@@ -20,6 +21,7 @@ const appRoutes: Routes = [
       { path: 'gauth', component: GauthComponent, canActivate: [LoggedInGuardService] },
       { path: 'guest-register', component: GuestRegisterComponent, canActivate: [LoggedInGuardService] },
       { path: 'complete-signin', component: SigninCompleteComponent, canActivate: [AuthGuardService, AuthGuestGuardService] },
+      { path: 'privacy', component: PrivacyComponent },
       { 
         path: 'questions',
         loadChildren: () => import('./questions/questions.module').then(q => q.QuestionsModule)

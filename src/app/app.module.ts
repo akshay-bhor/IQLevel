@@ -27,6 +27,7 @@ import * as fromApp from './store/app.reducer'
 import { QuesListEffects } from './questions/question-list/store/ques-list.effects';
 import { QuesDetailsEffects } from './questions/ques-details/store/ques-details.effects';
 import { SigninCompleteComponent } from './signin-complete/signin-complete.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { SigninCompleteComponent } from './signin-complete/signin-complete.compo
     GuestRegisterComponent,
     GauthComponent,
     GoogleOneTapComponent,
-    SigninCompleteComponent
+    SigninCompleteComponent,
+    PrivacyComponent
   ],
   imports: [
     BrowserModule,
